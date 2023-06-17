@@ -50,7 +50,9 @@ const validate = (data) => {
 	const schema = Joi.object({
 		email: Joi.string().email().required().label("Email"),
 		password: Joi.string().required().label("Password"),
+		matricule: Joi.string().required().label("Matricule"),
 	});
+
 	return schema.validate(data);
 };
 
