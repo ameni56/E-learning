@@ -2,8 +2,17 @@ import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import styles from "./styles.module.css";
+import logo from '../images/logoTT.png';
+import '../../../src/style.css';
+import Carousel  from "../Carousel";
+
+
 
 const Signup = () => {
+  //
+  const [inputs, setInputs] = useState({});
+  const [activeInput, setActiveInput] = useState('');
+////////////////
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
@@ -24,12 +33,18 @@ const Signup = () => {
     e.preventDefault();
     if (data.password !== data.passwordConfirmation) {
       setError("Passwords do not match");
+      setTimeout(() => {
+        setError(""); // Clear the error after 2 seconds
+      }, 2000);
       return;
     }
     try {
       const url = "http://localhost:8080/api/users";
       const { data: res } = await axios.post(url, data);
       setMsg(res.message);
+      setTimeout(() => {
+        setMsg(""); // Clear the success message after 2 seconds
+      }, 3000);
     } catch (error) {
       if (
         error.response &&
@@ -37,24 +52,49 @@ const Signup = () => {
         error.response.status <= 500
       ) {
         setError(error.response.data.message);
+        setTimeout(() => {
+          setError(""); // Clear the error after 2 seconds
+        }, 2000);
       }
     }
   };
+  //
+ 
+
+  const handleInputFocus = (e) => {
+    setActiveInput(e.target.name);
+  };
+
+  const handleInputBlur = (e) => {
+    if (!e.target.value) {
+      setActiveInput('');
+    }
+  };
+  //
 
   return (
-    <div className={styles.signup_container}>
-      <div className={styles.signup_form_container}>
-        <div className={styles.left}>
-          <h1>Welcome Back</h1>
-          <Link to="/login">
-            <button type="button" className={styles.white_btn}>
-              Sign in
-            </button>
-          </Link>
-        </div>
-        <div className={styles.right}>
-          <form className={styles.form_container} onSubmit={handleSubmit}>
-            <h1>Create Account</h1>
+	
+    <div className="box">
+        <div className="inner-box">
+          <div className="forms-wrap">
+          
+    <form onSubmit={handleSubmit} autoComplete="off" >
+  <div className="logo">
+        <img src={logo} alt="easyclass" />
+        <h4>TT ACADEMY</h4>
+      </div>
+
+      <div className="heading">
+        <h2>Bienvenue</h2>
+        <h6>Vous avez déjà un compte ? </h6>
+        <Link to="/login" style={{ alignSelf: "flex-start" }} className="toggle">
+           Se connecter
+           </Link>
+      </div>
+      
+      <div className="actual-form">
+      <div className={`input-wrap ${activeInput === 'name' ? 'active' : ''}`}>
+            
             <input
               type="text"
               placeholder="Nom"
@@ -62,8 +102,13 @@ const Signup = () => {
               onChange={handleChange}
               value={data.firstName}
               required
-              className={styles.input}
+              className="input-field"
+              
+            onFocus={handleInputFocus}
+            onBlur={handleInputBlur}
             />
+            </div>
+            <div className={`input-wrap ${activeInput === 'name' ? 'active' : ''}`}>
             <input
               type="text"
               placeholder="Prènom"
@@ -71,8 +116,13 @@ const Signup = () => {
               onChange={handleChange}
               value={data.lastName}
               required
-              className={styles.input}
+              className="input-field"
+             
+           onFocus={handleInputFocus}
+           onBlur={handleInputBlur}
             />
+            </div>
+            <div className={`input-wrap ${activeInput === 'name' ? 'active' : ''}`}>
             <input
               type="text"
               placeholder="Matricule"
@@ -80,8 +130,13 @@ const Signup = () => {
               onChange={handleChange}
               value={data.matricule}
               required
-              className={styles.input}
+              className="input-field"
+             
+            onFocus={handleInputFocus}
+            onBlur={handleInputBlur}
             />
+            </div>
+            <div className={`input-wrap ${activeInput === 'email' ? 'active' : ''}`}>
             <input
               type="email"
               placeholder="Email"
@@ -89,8 +144,13 @@ const Signup = () => {
               onChange={handleChange}
               value={data.email}
               required
-              className={styles.input}
+              className="input-field"
+            
+              onFocus={handleInputFocus}
+              onBlur={handleInputBlur}
             />
+            </div>
+            <div className={`input-wrap ${activeInput === 'password' ? 'active' : ''}`}>
             <input
               type="password"
               placeholder="Mot de passe"
@@ -98,9 +158,14 @@ const Signup = () => {
               onChange={handleChange}
               value={data.password}
               required
-              className={styles.input}
-            />
+              className="input-field"
+              
+              onFocus={handleInputFocus}
+              onBlur={handleInputBlur}
 
+            />
+            </div>
+            <div className={`input-wrap ${activeInput === 'password' ? 'active' : ''}`}>
             <input
               type="password"
               placeholder="Confirmer le mot de passe"
@@ -108,9 +173,14 @@ const Signup = () => {
               onChange={handleChange}
               value={data.passwordConfirmation}
               required
-              className={styles.input}
+              className="input-field"
+             
+              onFocus={handleInputFocus}
+              onBlur={handleInputBlur}
+
             />
-            <div className={styles.role_container}>
+            </div>
+            {/* <div className={styles.role_container}>
               <label htmlFor="role">Role:</label>
               <select
                 id="role"
@@ -123,17 +193,26 @@ const Signup = () => {
                 <option value="formateur">Formateur</option>
                 <option value="agent">Agent</option>
               </select>
-            </div>
+            </div> */}
             {error && <div className={styles.error_msg}>{error}</div>}
             
  {msg && <div className={styles.success_msg}>{msg}</div>}
-            <button type="submit" className={styles.green_btn}>
-              Sign Up
+            
+            <button type="submit" className="sign-btn" >
+              S'inscrire
             </button>
+           
+       </div>
+       
           </form>
-        </div>
-      </div>
-    </div>
+          </div>
+          <Carousel/>
+          </div>
+          </div>
+          
+          
+          
+       
   );
 };
 

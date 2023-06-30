@@ -3,11 +3,32 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import styles from "./styles.module.css";
+import logo from '../images/logoTT.png';
+import '../../../src/style.css';
+import Carousel  from "../Carousel";
 
 const Login = () => {
+  const [inputs, setInputs] = useState({});
+  const [activeInput, setActiveInput] = useState('');
+  const [showSignUp, setShowSignUp] = useState(false);
+  
   const [data, setData] = useState({ email: "", password: "", matricule: "" });
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+ 
+  
+  const handleInputFocus = (e) => {
+    setActiveInput(e.target.name);
+  };
+
+  const handleInputBlur = (e) => {
+    if (!e.target.value) {
+      setActiveInput('');
+    }
+  };
+
+
 
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
@@ -34,68 +55,95 @@ const Login = () => {
       }
     }
   };
-
   return (
-    <div className={styles.login_container}>
-      <div className={styles.login_form_container}>
-        <div className={styles.left}>
-          <form className={styles.form_container} onSubmit={handleSubmit}>
-            <h1>Login to Your Account</h1>
-			<input
-              type="text"
-              placeholder="Matricule"
-              name="matricule"
-              onChange={handleChange}
-              value={data.matricule}
-              required
-              className={styles.input}
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              name="email"
-              onChange={handleChange}
-              value={data.email}
-              required
-              className={styles.input}
-            />
-            <div className={styles.password_input_container}>
-              <input
-                type={showPassword ? "text" : "password"}
-                placeholder="Password"
-                name="password"
-                onChange={handleChange}
-                value={data.password}
-                required
-                className={styles.input}
-              />
-              <div
-                className={styles.password_toggle}
-                onClick={togglePasswordVisibility}
-              >
-                {showPassword ? <FaEyeSlash /> : <FaEye />}
-              </div>
-            </div>
-           
-            <Link to="/forgot-password" style={{ alignSelf: "flex-start" }}>
-              <p style={{ padding: "0 15px" }}>Forgot Password?</p>
-            </Link>
-            {error && <div className={styles.error_msg}>{error}</div>}
-            <button type="submit" className={styles.green_btn}>
-              Sign In
-            </button>
-          </form>
-        </div>
-        <div className={styles.right}>
-          <h1>New Here?</h1>
-          <Link to="/signup">
-            <button type="button" className={styles.white_btn}>
-              Sign Up
-            </button>
-          </Link>
-        </div>
+    <div className="box">
+    <div className="inner-box">
+      <div className="forms-wrap">
+    <form onSubmit={handleSubmit} autoComplete="off" className={`sign-in-form ${showSignUp ? 'slide-out' : ''}`}>
+  <div className="logo">
+        <img src={logo} alt="easyclass" />
+        <h4>TT ACADEMY</h4>
       </div>
-    </div>
+      <div className="heading">
+        <h2>Bienvenue</h2>
+        <h6>Pas encore inscrit ? </h6>
+        
+        <Link to="/signup" style={{ alignSelf: "flex-start" }} className="toggle">
+           S'inscrire
+           </Link>
+       
+      </div>
+      <div className="actual-form">
+        <div className={`input-wrap ${activeInput === 'name' ? 'active' : ''}`}>
+          <input
+            type="text"
+            name="matricule"
+            placeholder="Matricule"
+            className="input-field"
+            autoComplete="off"
+            required
+            onChange={handleChange}
+            value={data.matricule}
+          
+            onFocus={handleInputFocus}
+            onBlur={handleInputBlur}
+          />
+         
+        </div>
+        <div className={`input-wrap ${activeInput === 'email' ? 'active' : ''}`}>
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            className="input-field"
+            autoComplete="off"
+            required
+            onChange={handleChange}
+            value={data.email}
+          
+            onFocus={handleInputFocus}
+            onBlur={handleInputBlur}
+          />
+          </div>
+          <div className={`input-wrap ${activeInput === 'password' ? 'active' : ''}`}>
+  <input
+    type={showPassword ? "text" : "password"}
+    placeholder="Mot de passe"
+    name="password"
+    minLength="4"
+    className="input-field"
+    autoComplete="off"
+    required
+    onChange={handleChange}
+    value={data.password}
+    onFocus={handleInputFocus}
+    onBlur={handleInputBlur}
+  />
+  <div
+    className={styles.password_toggle}
+    onClick={togglePasswordVisibility}
+  >
+    {showPassword ? <FaEyeSlash /> : <FaEye />}
+  </div>
+</div>
+{error && <div className={styles.error_msg}>{error}</div>}
+<button type="submit" className="sign-btn">
+  Se connecter
+</button>
+<Link to="/forgot-password" style={{ alignSelf: "flex-start" }} className="toggle">
+  <p style={{ padding: "0 1px" }}>Mot de passe oublié ?</p>
+</Link>
+      </div>
+
+
+   
+
+
+</form>
+</div>
+<Carousel/>
+</div>
+</div>
   );
 };
 

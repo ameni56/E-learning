@@ -45,16 +45,17 @@
 
 .error_msg,
 .success_msg {
-	width: 370px;
-	padding: 15px;
+	width: 80%; /* Adjust the percentage as needed */
+	padding: 10px;
 	margin: 5px 0;
-	font-size: 14px;
+	font-size: 10px;
 	background-color: #f34646;
 	color: white;
 	border-radius: 5px;
 	text-align: center;
+	margin-top: -30px;
+	margin-left: 25px;
 }
-
 .success_msg {
 	background-color: #5cdd5c;
 }

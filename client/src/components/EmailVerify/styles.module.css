@@ -1,20 +1,23 @@
-.container {
-	width: 100vw;
-	height: 100vh;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-}
+/* styles.module.css */
 
-.green_btn {
-	border: none;
-	outline: none;
-	padding: 12px 0;
-	background-color: #3bb19b;
-	border-radius: 20px;
-	width: 180px;
-	font-weight: bold;
-	font-size: 14px;
-	cursor: pointer;
-}
+.message {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	padding: 10px;
+	font-size: 16px;
+	text-align: center;
+	border-radius: 5px;
+  }
+  
+  .success {
+	background-color: #4caf50; /* Green background color for success message */
+	color: #ffffff; /* White text color for success message */
+  }
+  
+  .error {
+	background-color: #f44336; /* Red background color for error message */
+	color: #ffffff; /* White text color for error message */
+  }
+  
