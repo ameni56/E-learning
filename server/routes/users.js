@@ -14,6 +14,32 @@ router.post("/", async (req, res) => {
 
     const { firstName, lastName, matricule, email, password,  passwordConfirmation, role } = req.body;
 
+    // let emptyField=[]
+    // if(!firstName){
+    //   emptyField.push('Nom')
+    // }
+    // if(!lastName){
+    //   emptyField.push('Prènom')
+    // }
+    // if(!matricule){
+    //   emptyField.push('Matricule')
+    // }
+    // if(!email){
+    //   emptyField.push('Email')
+    // }
+    // if(!password){
+    //   emptyField.push('Mot de passe')
+    // }
+    // if(!passwordConfirmation){
+    //   emptyField.push('Confirmation de mot de passe')
+    // }
+    // if (!emptyField.length> 0 ){
+    //   return res.status(400).json({error:'Please fill in all the fields',emptyField})
+    // }
+    
+    
+
+    
     let user = await User.findOne({ email });
     if (user) {
       return res.status(409).send({ message: "User with the given email already exists!" });

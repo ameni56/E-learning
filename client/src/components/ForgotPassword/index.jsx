@@ -32,6 +32,7 @@ const ForgotPassword = () => {
 			error.response.status <= 500
 		  ) {
 			setError(error.response.data.message);
+			setTimeout(() => setError(""), 3000);
 			setMsg("");
 		  }
 		}
@@ -53,6 +54,7 @@ const ForgotPassword = () => {
 	  //
 
 	return (
+		<main>
 		<div className="box">
         <div className="inner-box">
           <div className="forms-wrap">
@@ -104,6 +106,7 @@ const ForgotPassword = () => {
 			<Carousel/>
 			</div>
 			</div>
+			</main>
 		
 	);
 };

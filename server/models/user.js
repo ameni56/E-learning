@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   
   verified: { type: Boolean, default: false },
-  role: { type: String, enum: ['admin', 'formateur', 'agent'], default: 'admin' },
+  role: { type: String, enum: ['supadmin','admin', 'formateur', 'agent'], default: 'admin' },
   createdAt: { type: Date, default: Date.now },
 });
 
@@ -38,7 +38,7 @@ const validate = (data) => {
       .messages({
         "any.only": "Passwords do not match",
       }),
-    role: Joi.string().valid('admin', 'formateur', 'agent').label("Role"),
+    role: Joi.string().valid('supadmin','admin','formateur', 'agent').label("Role"),
   });
   return schema.validate(data);
 };

@@ -5,11 +5,12 @@ import styles from "./styles.module.css";
 import logo from '../images/logoTT.png';
 import '../../../src/style.css';
 import Carousel  from "../Carousel";
-
+import {useForm} from "react-hook-form"
 
 
 const Signup = () => {
   //
+ const {register,formState:{errors},handleSubmit,}=useForm();
   const [inputs, setInputs] = useState({});
   const [activeInput, setActiveInput] = useState('');
 ////////////////
@@ -20,16 +21,29 @@ const Signup = () => {
     password: "",
     matricule: "",
     passwordConfirmation: "",
-    role: "admin", // Set the default role to "admin"
+    role: [], 
   });
   const [error, setError] = useState("");
   const [msg, setMsg] = useState("");
 
-  const handleChange = ({ currentTarget: input }) => {
-    setData({ ...data, [input.name]: input.value });
+  const handleChange = (e) => {
+    const { name, value, checked } = e.target;
+    if (name === "role") {
+      let role = '';
+      if (checked) {
+        role = value;
+      }
+      setData({ ...data, role });
+    } else {
+      setData({ ...data, [name]: value });
+    }
   };
+  
+  
+  
+  
 
-  const handleSubmit = async (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     if (data.password !== data.passwordConfirmation) {
       setError("Passwords do not match");
@@ -42,6 +56,7 @@ const Signup = () => {
       const url = "http://localhost:8080/api/users";
       const { data: res } = await axios.post(url, data);
       setMsg(res.message);
+     
       setTimeout(() => {
         setMsg(""); // Clear the success message after 2 seconds
       }, 3000);
@@ -52,12 +67,14 @@ const Signup = () => {
         error.response.status <= 500
       ) {
         setError(error.response.data.message);
+      
         setTimeout(() => {
           setError(""); // Clear the error after 2 seconds
         }, 2000);
       }
     }
   };
+  
   //
  
 
@@ -73,12 +90,13 @@ const Signup = () => {
   //
 
   return (
+    <main>
 	
     <div className="box">
         <div className="inner-box">
           <div className="forms-wrap">
           
-    <form onSubmit={handleSubmit} autoComplete="off" >
+    <form onSubmit={handleSubmit(onSubmit)} autoComplete="off" >
   <div className="logo">
         <img src={logo} alt="easyclass" />
         <h4>TT ACADEMY</h4>
@@ -91,6 +109,7 @@ const Signup = () => {
            Se connecter
            </Link>
       </div>
+    
       
       <div className="actual-form">
       <div className={`input-wrap ${activeInput === 'name' ? 'active' : ''}`}>
@@ -101,12 +120,14 @@ const Signup = () => {
               name="firstName"
               onChange={handleChange}
               value={data.firstName}
-              required
+              // required
               className="input-field"
               
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
+            {...register("firstName",{required:true})}
             />
+            <p>{errors.firstName && "Nom est obligatoire"}</p>
             </div>
             <div className={`input-wrap ${activeInput === 'name' ? 'active' : ''}`}>
             <input
@@ -143,12 +164,14 @@ const Signup = () => {
               name="email"
               onChange={handleChange}
               value={data.email}
-              required
+              // required
               className="input-field"
             
               onFocus={handleInputFocus}
               onBlur={handleInputBlur}
+              {...register("email",{required:true,pattern:/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/i})}
             />
+            <error>{errors.email?.type === "required" && "Email est obligatoire"}</error>
             </div>
             <div className={`input-wrap ${activeInput === 'password' ? 'active' : ''}`}>
             <input
@@ -180,20 +203,37 @@ const Signup = () => {
 
             />
             </div>
-            {/* <div className={styles.role_container}>
-              <label htmlFor="role">Role:</label>
-              <select
-                id="role"
-                name="role"
-                value={data.role}
-                onChange={handleChange}
-                className={styles.input}
-              >
-                <option value="admin">Admin</option>
-                <option value="formateur">Formateur</option>
-                <option value="agent">Agent</option>
-              </select>
-            </div> */}
+            <div style={{ alignSelf: "flex-start" }} className="toggleposte">
+              Quelle est votre poste ?
+             </div>
+            <div className={`input-wrap ${styles.checkboxContainer}`}>
+             
+  <input
+    type="checkbox"
+    name="role"
+    value="agent"
+    checked={data.role.includes("agent")}
+    onChange={handleChange}
+    className={styles.checkbox}
+  />
+  Agent
+ 
+ 
+
+
+  
+  <input
+    type="checkbox"
+    name="role"
+    value="formateur"
+    checked={data.role.includes("formateur")}
+    onChange={handleChange}
+    className={styles.checkbox}
+  />
+  Formateur
+
+</div>
+
             {error && <div className={styles.error_msg}>{error}</div>}
             
  {msg && <div className={styles.success_msg}>{msg}</div>}
@@ -212,7 +252,7 @@ const Signup = () => {
           
           
           
-       
+          </main>
   );
 };
 

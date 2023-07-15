@@ -45,6 +45,7 @@ const EmailVerify = () => {
   }, [param]);
 
   return (
+    <main>
     <Fragment>
       {validUrl ? (
         <>
@@ -58,6 +59,7 @@ const EmailVerify = () => {
         </>
       )}
     </Fragment>
+    </main>
   );
 };
 

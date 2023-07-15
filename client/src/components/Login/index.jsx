@@ -52,10 +52,12 @@ const Login = () => {
         error.response.status <= 500
       ) {
         setError(error.response.data.message);
+        setTimeout(() => setError(""), 3000);
       }
     }
   };
   return (
+    <main>
     <div className="box">
     <div className="inner-box">
       <div className="forms-wrap">
@@ -144,6 +146,7 @@ const Login = () => {
 <Carousel/>
 </div>
 </div>
+</main>
   );
 };
 

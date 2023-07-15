@@ -68,6 +68,7 @@ const PasswordReset = () => {
 	  //
 
 	return (
+		<main>
 		<Fragment>
 			{validUrl ? (
 				   
@@ -124,6 +125,7 @@ const PasswordReset = () => {
 			)}
 			
 		</Fragment>
+		</main>
 	);
 };
 

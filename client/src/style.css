@@ -124,10 +124,18 @@ form.sign-up-form {
 .toggle:hover {
   color: #8371fd;
 }
+.toggleposte{
+  color: #151111;
+  text-decoration: none;
+  font-size: 0.90rem;
+  font-weight: 500;
+  transition: 0.3s;
+  margin-bottom:30px;
+}
 
 .input-wrap {
   position: relative;
-  height: 37px;
+  height: 25px;
   margin-bottom: 2rem;
 }
 
@@ -406,3 +414,22 @@ main.sign-up-mode .carousel {
 }
 
 /* Rest of the CSS code... */
+
+
+.error_popup {
+  position: absolute;
+  top: 50%;
+  right: calc(100% + 8px);
+  transform: translateY(-50%);
+  background-color: red;
+  color: white;
+  padding: 8px;
+  border-radius: 4px;
+}
+.erreur {
+	color: red;
+	font-size: 400px;
+	text-align:left;
+  
+  }
+
