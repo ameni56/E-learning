@@ -53,11 +53,15 @@ import { useLocation, useNavigate } from "react-router-dom";
               icon: <Groups2Outlined />,
             },
             {
-              text: "Transactions",
+              text: "Formateurs",
+              icon: <Groups2Outlined />,
+            },
+            {
+              text: "Populations",
               icon: <ReceiptLongOutlined />,
             },
             {
-              text: "Geography",
+              text: "Modules",
               icon: <PublicOutlined />,
             },
             {

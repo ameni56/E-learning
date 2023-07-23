@@ -1,148 +1,243 @@
+// Import statements
 import React, { useState, useEffect } from "react";
 import {
   Box,
   Card,
   CardActions,
   CardContent,
-  Collapse,
-  Button,
   Typography,
-  Rating,
   useTheme,
   useMediaQuery,
   IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button
 } from "@mui/material";
-import { Edit, Delete } from "@mui/icons-material";
+import { Edit, Delete, Add } from "@mui/icons-material";
 import Header from "../../components/Header";
-import { useGetFormationsQuery, useUpdateFormationMutation, useDeleteFormationMutation } from "../../state/api";
+import { useGetModulesQuery, useUpdateFormationMutation, useDeleteFormationMutation, useGetFormationsQuery, useCreateFormationMutation, useGetPopulationsQuery, useGetFormateursQuery } from "../../state/api";
+import { useNavigate } from "react-router-dom";
 
+// Formation component
 const Formation = ({
   _id,
-  titre,
   description,
-  duree,
   objectifs,
-  statut,
   lienMeet,
   cours,
   modules,
   populationCible,
+  modulesData,
+  populationCiblesData, // Add populationCiblesData as a prop
   nomFormateur,
   dateDebut,
   dateFin,
-  heureDebut,
-  heureFin,
-  rating,
+  formateurAccepte,
+  agents,
   stat,
-  onDelete,
+  nomFormateurData, // Add nomFormateurData as a prop
+  onDelete
 }) => {
   const theme = useTheme();
   const [isExpanded, setIsExpanded] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
+  const navigate = useNavigate();
 
-  // Mutation hooks
   const [updateFormation] = useUpdateFormationMutation();
   const [deleteFormation] = useDeleteFormationMutation();
+  const [createFormation] = useCreateFormationMutation();
 
   const handleEdit = () => {
-    const updatedFormation = {
-      // Update the properties you want to modify
-      titre: "Updated Title",
-      description: "Updated Description",
-      rating: 5,
-    };
-
-    updateFormation({ id: _id, formation: updatedFormation });
+    navigate(`/formations/${_id}`);
   };
 
-  const handleDelete = async () => {
+  const handleDelete = () => {
+    setShowConfirmation(true);
+  };
+
+  const handleConfirmDelete = async () => {
     await deleteFormation(_id);
-    onDelete(_id); // Notify the parent component that a formation has been deleted
+    onDelete(_id);
+  };
+
+  const handleCancelDelete = () => {
+    setShowConfirmation(false);
+  };
+
+  const handleShowDetails = () => {
+    setShowDetails(true);
+  };
+
+  const handleCloseDetails = () => {
+    setShowDetails(false);
   };
 
   return (
-    <Card
-      sx={{
-        backgroundImage: "none",
-        backgroundColor: theme.palette.background.alt,
-        borderRadius: "0.55rem",
-      }}
-    >
+    <Card variant="outlined">
       <CardContent>
-        <Typography
-          sx={{ fontSize: 14 }}
-          color={theme.palette.secondary[700]}
-          gutterBottom
-        >
-          {modules}
+        <Typography variant="h5">
+          {modulesData && modulesData.length > 0 ? (
+            modules
+              .map((moduleId) =>
+                modulesData.find((m) => m._id === moduleId)?.nom || "Unknown Module"
+              )
+              .join(", ")
+          ) : (
+            <span>Loading...</span>
+          )}
         </Typography>
-        <Typography variant="h5" component="div">
-          {titre}
+
+        {/* <Typography variant="body2">Nom Formateur: {nomFormateurData ? nomFormateurData.email: nomFormateur}</Typography> */}
+        <Typography variant="body2">
+        nomFormateurData:{" "}
+          {nomFormateurData && nomFormateurData.length > 0 ? (
+            nomFormateur
+              .map((nomFormateurId) =>
+              nomFormateurData.find((p) => p._id === nomFormateurId)?.email || "Unknown nomFormateur"
+              )
+              .join(", ")
+          ) : (
+            <span>Loading...</span>
+          )}
         </Typography>
-        <Rating value={rating} readOnly />
-        <Typography variant="body2">{description}</Typography>
+
+
+        <Typography variant="body2">
+          Population cible:{" "}
+          {populationCiblesData && populationCiblesData.length > 0 ? (
+            populationCible
+              .map((populationCibleId) =>
+                populationCiblesData.find((p) => p._id === populationCibleId)?.nom || "Unknown Population Cible"
+              )
+              .join(", ")
+          ) : (
+            <span>Loading...</span>
+          )}
+        </Typography>
       </CardContent>
       <CardActions>
-        <Button
-          variant="primary"
-          size="small"
-          onClick={() => setIsExpanded(!isExpanded)}
-        >
-          See More
+        <Button size="small" onClick={handleShowDetails}>
+          View Details
         </Button>
-        <Box sx={{ flexGrow: 1 }} />
-        <IconButton
-          color="primary"
-          aria-label="Edit Formation"
-          onClick={handleEdit}
-        >
+        <IconButton aria-label="Edit Formation" onClick={handleEdit}>
           <Edit />
         </IconButton>
         <IconButton
-          color="primary"
           aria-label="Delete Formation"
           onClick={handleDelete}
+          sx={{ color: "red" }}
         >
           <Delete />
         </IconButton>
       </CardActions>
-      <Collapse
-        in={isExpanded}
-        timeout="auto"
-        unmountOnExit
-        sx={{
-          color: theme.palette.secondary[400],
-        }}
-      >
-        <CardContent>
-          <Typography>id: {_id}</Typography>
-        </CardContent>
-      </Collapse>
+      <Dialog open={showDetails} onClose={handleCloseDetails}>
+        <DialogTitle>Formation Details</DialogTitle>
+        <DialogContent>
+          <Typography>
+            Module:{" "}
+            {modulesData && modulesData.length > 0 ? (
+              modules
+                .map((moduleId) =>
+                  modulesData.find((m) => m._id === moduleId)?.nom || "Unknown Module"
+                )
+                .join(", ")
+            ) : (
+              <span>Loading...</span>
+            )}
+          </Typography>
+          <Typography>Objectif: {objectifs}</Typography>
+          <Typography>
+            Population cible:{" "}
+            {populationCiblesData && populationCiblesData.length > 0 ? (
+              populationCible
+                .map((populationCibleId) =>
+                  populationCiblesData.find((p) => p._id === populationCibleId)?.nom || "Unknown Population Cible"
+                )
+                .join(", ")
+            ) : (
+              <span>Loading...</span>
+            )}
+          </Typography>
+          {/* <Typography>Nom du formateur: {nomFormateurData ? nomFormateurData.email : nomFormateur}</Typography> */}
+          <Typography variant="body2">
+        nomFormateurData:{" "}
+          {nomFormateurData && nomFormateurData.length > 0 ? (
+            nomFormateur
+              .map((nomFormateurId) =>
+              nomFormateurData.find((p) => p._id === nomFormateurId)?.email || "Unknown nomFormateur"
+              )
+              .join(", ")
+          ) : (
+            <span>Loading...</span>
+          )}
+        </Typography>
+          <Typography>Date début: {dateDebut}</Typography>
+          <Typography>Date fin: {dateFin}</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDetails} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog open={showConfirmation} onClose={handleCancelDelete}>
+        <DialogTitle>Confirmer la suppression</DialogTitle>
+        <DialogContent>
+          <Typography>
+            Voulez-vous vraiment supprimer cette formation ?
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCancelDelete} color="primary">
+            Annuler
+          </Button>
+          <Button onClick={handleConfirmDelete} color="primary" sx={{ color: "red" }}>
+            Supprimer
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Card>
   );
 };
 
 const Formations = () => {
   const { data, isLoading, refetch } = useGetFormationsQuery();
+  const { data: modulesData, isLoading: isLoadingModules } = useGetModulesQuery();
+  const { data: populationCiblesData, isLoading: isLoadingPopulationCibles } = useGetPopulationsQuery(); // Fetch populationCiblesData
+  const { data: nomFormateurData, isLoading: isLoadingNomFormateurs } = useGetFormateursQuery(); // Fetch nomFormateurData
   const isNonMobile = useMediaQuery("(min-width:1000px)");
-  const [formationsData, setFormationsData] = useState([]); // Initialize the state with an empty array
+  const [formationsData, setFormationsData] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!isLoading) {
-      setFormationsData(data || []); // Update the state variable when data changes or set it to an empty array if data is undefined
+      setFormationsData(data || []);
     }
   }, [data, isLoading]);
 
-  const handleDeleteFormation = (formationId) => {
-    // Filter out the deleted formation from the data array
+  const handleDeleteFormation = async (formationId) => {
     const updatedData = formationsData.filter((formation) => formation._id !== formationId);
-    // Update the state variable
     setFormationsData(updatedData);
+
+    // Call the refetch function to refresh the list after deletion
+    await refetch();
+  };
+
+  const handleAddFormation = () => {
+    navigate("/formations/add");
   };
 
   return (
     <Box m="1.5rem 2.5rem">
-      <Header subtitle="Voir toutes les formations." />
-      {formationsData.length > 0 || !isLoading ? ( // Add a check to ensure formationsData is not empty
+      <Box display="flex" alignItems="center" mb="1rem">
+        <Button variant="contained" startIcon={<Add />} onClick={handleAddFormation}>
+          Ajouter formation
+        </Button>
+      </Box>
+      {formationsData.length > 0 || !isLoading ? (
         <Box
           mt="20px"
           display="grid"
@@ -155,11 +250,18 @@ const Formations = () => {
           }}
         >
           {formationsData.map((formation) => (
-            <Formation key={formation._id} {...formation} onDelete={handleDeleteFormation} />
+            <Formation
+              key={formation._id}
+              {...formation}
+              modulesData={modulesData}
+              populationCiblesData={populationCiblesData}
+              nomFormateurData={nomFormateurData} // Pass the nomFormateurData to the Formation component
+              onDelete={handleDeleteFormation}
+            />
           ))}
         </Box>
       ) : (
-        <>Loading...</>
+        <>En cours...</>
       )}
     </Box>
   );

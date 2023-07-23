@@ -60,6 +60,7 @@ const Login = () => {
     <main>
     <div className="box">
     <div className="inner-box">
+    {error && <div className={styles.error_msg}>{error}</div>}
       <div className="forms-wrap">
     <form onSubmit={handleSubmit} autoComplete="off" className={`sign-in-form ${showSignUp ? 'slide-out' : ''}`}>
   <div className="logo">
@@ -128,7 +129,7 @@ const Login = () => {
     {showPassword ? <FaEyeSlash /> : <FaEye />}
   </div>
 </div>
-{error && <div className={styles.error_msg}>{error}</div>}
+
 <button type="submit" className="sign-btn">
   Se connecter
 </button>

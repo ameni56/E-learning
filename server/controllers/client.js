@@ -24,15 +24,15 @@ const getFormations=async(req,res)=>{
       }
     };
 
-//Création d'une formation
+// Create a new formation
 const createFormation = async (req, res) => {
   try {
     const {
-      titre,
+     
       description,
       duree,
       objectifs,
-      statut,
+      // statut,
       lienMeet,
       cours,
       modules,
@@ -40,17 +40,19 @@ const createFormation = async (req, res) => {
       nomFormateur,
       dateDebut,
       dateFin,
-      heureDebut,
-      heureFin,
-      rating,
+      
+      formateurAccepte,
+      agents
     } = req.body;
 
+    console.log("Received formation data:", req.body);
+
     const newFormation = new Formation({
-      titre,
+     
       description,
       duree,
       objectifs,
-      statut,
+      // statut,
       lienMeet,
       cours,
       modules,
@@ -58,13 +60,16 @@ const createFormation = async (req, res) => {
       nomFormateur,
       dateDebut,
       dateFin,
-      heureDebut,
-      heureFin,
-      rating,
+      
+      formateurAccepte,
+      agents
     });
 
-   
+    console.log("New formation object:", newFormation);
+
     const savedFormation = await newFormation.save();
+
+    console.log("Saved formation:", savedFormation);
 
     if (!savedFormation) {
       throw new Error("Failed to create formation");
@@ -72,9 +77,11 @@ const createFormation = async (req, res) => {
 
     res.status(201).json(savedFormation);
   } catch (error) {
+    console.log("Error:", error);
     res.status(400).json({ message: error.message });
   }
 };
+
 
 //Modifier formation
 const updateFormation = async (req, res) => {
@@ -145,6 +152,16 @@ const getAgents=async(req,res)=>{
    }
  };
 
+//Formateurs
+const getFormateurs=async(req,res)=>{
+  try {
+   const agents=await User.find({role:"formateur"}).select("-password");
+    res.status(200).json(agents);
+   } catch (error) {
+     res.status(404).json({ message: error.message });
+   }
+ };
+
 
 
     module.exports = {
@@ -153,6 +170,7 @@ const getAgents=async(req,res)=>{
       updateFormation,
   deleteFormation,
   getFormationById,
-      getAgents
+      getAgents,
+      getFormateurs
     };
     

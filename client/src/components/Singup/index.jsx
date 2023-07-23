@@ -10,7 +10,7 @@ import {useForm} from "react-hook-form"
 
 const Signup = () => {
   //
- const {register,formState:{errors},handleSubmit,}=useForm();
+ 
   const [inputs, setInputs] = useState({});
   const [activeInput, setActiveInput] = useState('');
 ////////////////
@@ -92,11 +92,15 @@ const Signup = () => {
   return (
     <main>
 	
+ 
     <div className="box">
         <div className="inner-box">
+        {error && <div className={styles.error_msg}>{error}</div>}
+            
+            {msg && <div className={styles.success_msg}>{msg}</div>}
           <div className="forms-wrap">
-          
-    <form onSubmit={handleSubmit(onSubmit)} autoComplete="off" >
+         
+    <form onSubmit={onSubmit} autoComplete="off" >
   <div className="logo">
         <img src={logo} alt="easyclass" />
         <h4>TT ACADEMY</h4>
@@ -120,14 +124,14 @@ const Signup = () => {
               name="firstName"
               onChange={handleChange}
               value={data.firstName}
-              // required
+               required
               className="input-field"
               
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}
-            {...register("firstName",{required:true})}
+            
             />
-            <p>{errors.firstName && "Nom est obligatoire"}</p>
+            
             </div>
             <div className={`input-wrap ${activeInput === 'name' ? 'active' : ''}`}>
             <input
@@ -169,9 +173,9 @@ const Signup = () => {
             
               onFocus={handleInputFocus}
               onBlur={handleInputBlur}
-              {...register("email",{required:true,pattern:/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/i})}
+              
             />
-            <error>{errors.email?.type === "required" && "Email est obligatoire"}</error>
+           
             </div>
             <div className={`input-wrap ${activeInput === 'password' ? 'active' : ''}`}>
             <input
@@ -234,9 +238,6 @@ const Signup = () => {
 
 </div>
 
-            {error && <div className={styles.error_msg}>{error}</div>}
-            
- {msg && <div className={styles.success_msg}>{msg}</div>}
             
             <button type="submit" className="sign-btn" >
               S'inscrire

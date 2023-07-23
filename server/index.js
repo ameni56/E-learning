@@ -8,6 +8,8 @@ const authRoutes = require("./routes/auth");
 const passwordResetRoutes = require("./routes/passwordReset");
 const generalRoutes =require("./routes/general");
 const clientRoutes=require("./routes/client")
+const populationRoutes=require("./routes/population")
+const moduleRoutes=require ("./routes/module")
 // database connection
 connection();
 
@@ -22,6 +24,8 @@ app.use("/api/password-reset", passwordResetRoutes);
 //Admin panel
 app.use("/general",generalRoutes)
 app.use("/client",clientRoutes)
+app.use("/pop",populationRoutes)
+app.use("/mod",moduleRoutes)
 //
 
 const port = process.env.PORT || 8080;

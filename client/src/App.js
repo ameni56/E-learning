@@ -10,7 +10,18 @@ import Dashboard from "./scenes/dashboard";
 import Layout from "./scenes/layout"
 import Formations from "./scenes/formations";
 import Agents from "./scenes/agents"
+import Formateurs from "./scenes/formateurs"
+import UpdateFormation from "./scenes/updateFormation";
+import AddFormation from "./scenes/addFormation"
+//Population
+import Population from "./scenes/population"
+import UpdatePopulation from "./scenes/updatePopulation"
+//Module
+import Module from "./scenes/module"
+import UpdateModule from "./scenes/updateModule"
+
 //
+
 import Main from "./components/Main";
 import Signup from "./components/Singup";
 import Login from "./components/Login";
@@ -41,6 +52,16 @@ function App() {
 			<Route path="/dashboard" element={<Dashboard />} />
 			<Route path="/formations" element={<Formations />} />
 			<Route path="/agents" element={<Agents />} />
+			<Route path="/formateurs" element={<Formateurs />} />
+			<Route path="/formations/:id" element={<UpdateFormation />} />
+			<Route path="/formations/add" element={<AddFormation />} />
+			{/* Population */}
+			<Route path="/populations" element={<Population />} />
+			<Route path="/populations/:id" element={<UpdatePopulation />} />
+			{/* Module */}
+			<Route path="/modules" element={<Module />} />
+			<Route path="/modules/:id" element={<UpdateModule />} />
+
 			</Route>
 			{/*  */}
 			<Route path="/signup" exact element={<Signup />} />

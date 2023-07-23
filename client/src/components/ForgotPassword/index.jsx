@@ -57,6 +57,8 @@ const ForgotPassword = () => {
 		<main>
 		<div className="box">
         <div className="inner-box">
+		{error && <div className={styles.error_msg}>{error}</div>}
+				{msg && <div className={styles.success_msg}>{msg}</div>}
           <div className="forms-wrap">
 <form onSubmit={handleSubmit} autoComplete="off" >
   <div className="logo">
@@ -95,8 +97,7 @@ const ForgotPassword = () => {
 
 		
 				
-				{error && <div className={styles.error_msg}>{error}</div>}
-				{msg && <div className={styles.success_msg}>{msg}</div>}
+				
 				<button type="submit" className="sign-btn">
 					Submit
 				</button>

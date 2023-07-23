@@ -1,64 +1,79 @@
 const mongoose = require('mongoose');
 
-// Schéma pour la collection "formations"
+// Schema for the "formations" collection
 const formationSchema = new mongoose.Schema({
-  titre: {
-    type: String,
-    required: true
-  },
+  
   description: {
     type: String,
-    required: true
+   
   },
+  
   duree: {
-    type: String,
+    type: Number,
     required: true
   },
   objectifs: {
     type: [String],
     required: true
   },
-  statut: {
-    type: String,
-    enum: ['en_attente', 'validee'],
-    default: 'en_attente'
-  },
+  // statut: {
+  //   type: String,
+  //   enum: ['en_attente', 'validee'],
+  //   default: 'en_attente'
+  // },
   lienMeet: {
     type: String
   },
   cours: {
     type: [String]
   },
-  modules: {
-    type: [String]
-  },
-  populationCible: {
-    type: String
-  },
-  nomFormateur: {
-    type: String
-  },
+  // Utilisation de "ref" pour établir une relation avec le modèle Module
+  modules: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Module'
+  }],
+  populationCible: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Population'
+  }],
+   // Reference to the User model for the formateur
+   nomFormateur: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  }],
+
   dateDebut: {
     type: Date
   },
   dateFin: {
     type: Date
   },
-  heureDebut: {
-    type: String
+ 
+  // rating: {
+  //   type: Number
+  // },
+  formateurAccepte: {
+    type: Boolean,
+    default: false
   },
-  heureFin: {
-    type: String
-  },
-  rating:{
-    type : Number
-  },
+  agents: [
+    {
+      agent: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Agent'
+      },
+      accepte: {
+        type: Boolean,
+        default: false
+      }
+    }
+  ]
 },
-  {timestamps:true}
-  // Autres attributs spécifiques à la formation
+{ timestamps: true }
+// Other attributes specific to the formation
 );
 
-// Modèle pour la collection "formations"
+// Model for the "formations" collection
 const Formation = mongoose.model('Formation', formationSchema);
 
 module.exports = Formation;
