@@ -12,7 +12,7 @@ router.post("/", async (req, res) => {
       return res.status(400).send({ message: error.details[0].message });
     }
 
-    const { firstName, lastName, matricule, email, password,  passwordConfirmation, role } = req.body;
+    const { firstName, lastName, matricule, email, password,  passwordConfirmation, role ,populationCible} = req.body;
 
     // let emptyField=[]
     // if(!firstName){
@@ -64,6 +64,7 @@ router.post("/", async (req, res) => {
       email,
       password: hashPassword,
       role,
+      populationCible: [populationCible],
     }).save();
 
     const token = await new Token({

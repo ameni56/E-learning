@@ -1,23 +1,22 @@
 import { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import styles from "./styles.module.css";
 import logo from '../images/logoTT.png';
 import '../../../src/style.css';
-import Carousel  from "../Carousel";
+import Carousel from "../Carousel";
 
 const Login = () => {
   const [inputs, setInputs] = useState({});
   const [activeInput, setActiveInput] = useState('');
   const [showSignUp, setShowSignUp] = useState(false);
-  
   const [data, setData] = useState({ email: "", password: "", matricule: "" });
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
- 
-  
+  const navigate = useNavigate(); // Step 1: Add useNavigate hook
+
   const handleInputFocus = (e) => {
     setActiveInput(e.target.name);
   };
@@ -28,8 +27,6 @@ const Login = () => {
     }
   };
 
-
-
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
   };
@@ -37,14 +34,40 @@ const Login = () => {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const url = "http://localhost:8080/api/auth";
       const { data: res } = await axios.post(url, data);
-      localStorage.setItem("token", res.data);
-      window.location = "/";
+  
+      // Assuming the server returns the user's role in the response
+      const userRole = res.data.role; // Replace 'role' with the actual property name from the response
+  
+      if (!userRole) {
+        console.error("User role is missing in the server response.");
+        // Handle the case where the server response does not contain the user's role.
+        // You might want to show an error message to the user or redirect to a default dashboard.
+        return;
+      }
+  
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("userRole", userRole); // Save the user's role to local storage
+  
+      
+      // Check the user's role and navigate to the appropriate dashboard
+      if (userRole === "formateur") {
+        navigate("/LayoutFormateur/FormationFormateur", { state: { userEmail: data.email,userMatricule:data.matricule } });
+      } 
+      
+      else if (userRole === "agent") {
+        navigate("/HomeAgent");}
+      else if (userRole === "admin") {
+        navigate("/dashboardAdmin");
+      } else {
+        console.error("Unknown user role:", userRole);
+        // Handle the case if the user's role is not recognized.
+        // You might want to show an error message to the user or redirect to a default dashboard.
+      }
     } catch (error) {
       if (
         error.response &&
@@ -53,10 +76,14 @@ const Login = () => {
       ) {
         setError(error.response.data.message);
         setTimeout(() => setError(""), 3000);
+      } else {
+        console.error("Error occurred while logging in:", error);
+        // Handle other errors that might occur during login.
+        // You might want to show an error message to the user.
       }
     }
   };
-  return (
+    return (
     <main>
     <div className="box">
     <div className="inner-box">
@@ -65,7 +92,7 @@ const Login = () => {
     <form onSubmit={handleSubmit} autoComplete="off" className={`sign-in-form ${showSignUp ? 'slide-out' : ''}`}>
   <div className="logo">
         <img src={logo} alt="easyclass" />
-        <h4>TT ACADEMY</h4>
+        <h4>TT Académie</h4>
       </div>
       <div className="heading">
         <h2>Bienvenue</h2>

@@ -15,6 +15,7 @@ import {
   DialogActions,
   Button
 } from "@mui/material";
+import css from './formations.module.css'; // Import
 import { Edit, Delete, Add } from "@mui/icons-material";
 import Header from "../../components/Header";
 import { useGetModulesQuery, useUpdateFormationMutation, useDeleteFormationMutation, useGetFormationsQuery, useCreateFormationMutation, useGetPopulationsQuery, useGetFormateursQuery } from "../../state/api";
@@ -89,6 +90,12 @@ const Formation = ({
             <span>Loading...</span>
           )}
         </Typography>
+        <Typography variant="body2">
+          {formateurAccepte === true && <span className={css.accepted}>Statut: Accepté</span>}
+          {formateurAccepte === false && <span className={css.refused}>Statut: Refusé</span>}
+          {formateurAccepte === null && <span className={css.pending}>Statut: En attente</span>}
+        </Typography>
+
 
         {/* <Typography variant="body2">Nom Formateur: {nomFormateurData ? nomFormateurData.email: nomFormateur}</Typography> */}
         <Typography variant="body2">

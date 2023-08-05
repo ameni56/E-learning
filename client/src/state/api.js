@@ -105,7 +105,8 @@ export const api = createApi({
         }),
         invalidatesTags: ["Modules"],
       }),
-  
+      
+
       deleteModule: build.mutation({
         query: (id) => ({
           url: `mod/modules/${id}`,
@@ -113,7 +114,28 @@ export const api = createApi({
         }),
         invalidatesTags: ["Modules"],
       }),
+      getFormationsByUserEmail: build.query({
+        query: (userEmail) => `client/formation/${userEmail}`,
+        providesTags: ["Formations"],
+      }),
+
+      acceptFormation: build.mutation({
+        query: (id) => ({
+          url: `client/formations/${id}/accept`,
+          method: "PUT",
+        }),
+        // Optionally, you can invalidate the "Formations" tag after accepting the formation to refresh the list
+        invalidatesTags: ["Formations"],
+      }),
+      refuseFormation: build.mutation({
+        query: (id) => ({
+          url: `client/formations/${id}/refuse`,
+          method: "PUT",
+        }),
+        // Optionally, you can invalidate the "Formations" tag after refusing the formation to refresh the list
+        invalidatesTags: ["Formations"],
     }),
+  }),
   });
  
 
@@ -136,5 +158,8 @@ export const {
   useCreateModuleMutation,
   useUpdateModuleMutation,
   useDeleteModuleMutation,
+useGetFormationsByUserEmailQuery,
+useAcceptFormationMutation,
+useRefuseFormationMutation
 
 } = api;

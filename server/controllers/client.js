@@ -46,6 +46,7 @@ const createFormation = async (req, res) => {
     } = req.body;
 
     console.log("Received formation data:", req.body);
+// Explicitly set the formateurAccepte field as null
 
     const newFormation = new Formation({
      
@@ -61,7 +62,7 @@ const createFormation = async (req, res) => {
       dateDebut,
       dateFin,
       
-      formateurAccepte,
+      formateurAccepte:null,
       agents
     });
 
@@ -163,6 +164,88 @@ const getFormateurs=async(req,res)=>{
  };
 
 
+ const retrieveFormationByIdAndUserId = async (idFormation, idUser) => {
+  try {
+    // Use Mongoose or your chosen ORM to query the database for the formation
+    // Based on the given idFormation and idUser (formateur ID)
+    const formation = await Formation.findOne({
+      _id: idFormation,
+      idFormateur: idUser,
+    });
+
+    if (!formation) {
+      // If the formation is not found, you can throw an error or return null or an empty object as per your requirement
+      throw new Error('Formation not found');
+      // return null;
+      // return {};
+    }
+
+    // If the formation is found, you can return it as the result
+    return formation;
+  } catch (error) {
+    // Handle any errors that occur during the retrieval process
+    console.error('Error retrieving formation:', error);
+    throw error;
+  }
+};
+
+const getFormationsByUserEmail=async(req, res)=> {
+  try {
+    const userEmail = req.params.userEmail;
+    // Fetch the User document using the userEmail
+    const user = await User.findOne({ email: userEmail });
+
+    if (!user) {
+      // User not found, return an empty array or an error message
+      return res.json([]); // or res.status(404).json({ message: "User not found" });
+    }
+
+    // Fetch formations where nomFormateur matches the user's _id
+    const formations = await Formation.find({ nomFormateur: user._id });
+    res.json(formations);
+  } catch (error) {
+    console.error("Error fetching formations:", error);
+    res.status(500).json({ message: "Error fetching formations" });
+  }
+}
+
+
+
+
+// Controller to accept a formation
+const acceptFormation = async (req, res) => {
+  try {
+    const formation = await Formation.findById(req.params.id);
+    if (!formation) {
+      return res.status(404).json({ message: 'Formation not found' });
+    }
+
+    formation.formateurAccepte = true; // Set the formateurAccepte status to true
+    await formation.save();
+
+    res.status(200).json({ message: 'Formation accepted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error accepting formation', error });
+  }
+};
+
+// Controller to refuse a formation
+const refuseFormation = async (req, res) => {
+  try {
+    const formation = await Formation.findById(req.params.id);
+    if (!formation) {
+      return res.status(404).json({ message: 'Formation not found' });
+    }
+
+    formation.formateurAccepte = false; // Set the formateurAccepte status to false
+    await formation.save();
+
+    res.status(200).json({ message: 'Formation refused successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error refusing formation', error });
+  }
+};
+
 
     module.exports = {
       getFormations,
@@ -171,6 +254,10 @@ const getFormateurs=async(req,res)=>{
   deleteFormation,
   getFormationById,
       getAgents,
-      getFormateurs
+      getFormateurs,
+      getFormationsByUserEmail,
+      acceptFormation,
+      refuseFormation
+    
     };
     

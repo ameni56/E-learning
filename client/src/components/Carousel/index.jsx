@@ -23,7 +23,7 @@ const Carousel = () => {
       <div className="text-slider">
         <div className="text-wrap">
           <div className="text-group">
-            <h2>Apprendre avec TT Academy</h2>
+            <h2>Apprendre avec TT Académie</h2>
             {/* <h2>Customize as you like</h2>
             <h2>Invite students to your class</h2> */}
           </div>

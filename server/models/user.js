@@ -13,6 +13,10 @@ const userSchema = new mongoose.Schema({
   verified: { type: Boolean, default: false },
   role: { type: String, enum: ['supadmin','admin', 'formateur', 'agent'], default: 'admin' },
   createdAt: { type: Date, default: Date.now },
+  populationCible: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Population'
+  }],
 });
 
 userSchema.methods.generateAuthToken = function () {
@@ -39,6 +43,7 @@ const validate = (data) => {
         "any.only": "Passwords do not match",
       }),
     role: Joi.string().valid('supadmin','admin','formateur', 'agent').label("Role"),
+    populationCible: Joi.array().items(Joi.string()).label("Population Cible"),
   });
   return schema.validate(data);
 };

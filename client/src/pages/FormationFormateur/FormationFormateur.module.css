@@ -1,0 +1,56 @@
+.table-container{
+    padding: 3rem 5rem;
+}
+.table-container>:nth-child(1)
+{
+    border-radius: 10px!important;
+    overflow: hidden!important;;
+}
+.MuiTableRow-root, .MuiTableCell-root{
+    border: none!important;
+}
+
+
+.button {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .accepted,
+  .refused {
+    padding: 4px 10px;
+    border-radius: 4px;
+    color: #fff;
+    font-weight: bold;
+  }
+  
+  .accepted {
+    background-color: #00b894; /* Green color for accepted */
+  }
+  
+  .refused {
+    background-color: #d63031; /* Red color for refused */
+  }
+  
+  .accept,
+  .refuse {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .accept:hover,
+  .refuse:hover {
+    background-color: #0984e3; /* Darker shade of blue on hover */
+  }
+  
+  .accept:disabled,
+  .refuse:disabled {
+    background-color: #b2bec3; /* Light gray color when disabled */
+    cursor: not-allowed;
+  }

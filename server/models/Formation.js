@@ -54,7 +54,7 @@ const formationSchema = new mongoose.Schema({
   // },
   formateurAccepte: {
     type: Boolean,
-    default: false
+    default: null
   },
   agents: [
     {
