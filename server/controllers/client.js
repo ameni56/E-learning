@@ -208,6 +208,25 @@ const getFormationsByUserEmail=async(req, res)=> {
     res.status(500).json({ message: "Error fetching formations" });
   }
 }
+const getFormationsByUserEmailPopulation = async (req, res) => {
+  try {
+    const userEmail = req.params.userEmail;
+    // Fetch the User document using the userEmail
+    const user = await User.findOne({ email: userEmail });
+
+    if (!user) {
+      // User not found, return an empty array or an error message
+      return res.json([]); // or res.status(404).json({ message: "User not found" });
+    }
+
+    // Fetch formations where populationCible matches the user's populationCible
+    const formations = await Formation.find({ populationCible: user.populationCible });
+    res.json(formations);
+  } catch (error) {
+    console.error("Error fetching formations:", error);
+    res.status(500).json({ message: "Error fetching formations" });
+  }
+};
 
 
 
@@ -257,7 +276,8 @@ const refuseFormation = async (req, res) => {
       getFormateurs,
       getFormationsByUserEmail,
       acceptFormation,
-      refuseFormation
+      refuseFormation,
+      getFormationsByUserEmailPopulation
     
     };
     

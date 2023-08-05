@@ -135,6 +135,11 @@ export const api = createApi({
         // Optionally, you can invalidate the "Formations" tag after refusing the formation to refresh the list
         invalidatesTags: ["Formations"],
     }),
+    getFormationsByUserEmailPopulation: build.query({
+      query: ({ userEmail, populationCible }) =>
+        `client/formation/${userEmail}/${populationCible}`,
+      providesTags: ["Formations"],
+    }),
   }),
   });
  
@@ -160,6 +165,7 @@ export const {
   useDeleteModuleMutation,
 useGetFormationsByUserEmailQuery,
 useAcceptFormationMutation,
-useRefuseFormationMutation
+useRefuseFormationMutation,
+useGetFormationsByUserEmailPopulationQuery,
 
 } = api;

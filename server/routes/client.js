@@ -7,7 +7,8 @@ sendFormationToFormateurById,
 getFormationsFormateurs,
 getFormationsByUserEmail,
 acceptFormation,
-refuseFormation} = require("../controllers/client");
+refuseFormation,
+getFormationsByUserEmailPopulation} = require("../controllers/client");
 const Formation = require("../models/Formation");
 const { User } = require("../models/user");
 const router = express.Router();
@@ -30,6 +31,9 @@ router.put('/formations/:id/accept', acceptFormation);
 
 // Route to refuse a formation
 router.put('/formations/:id/refuse', refuseFormation);
+
+router.get("/formation/:userEmail/:populationCible", getFormationsByUserEmailPopulation);
+
 
 
 

@@ -60,7 +60,7 @@ const Login = () => {
       } 
       
       else if (userRole === "agent") {
-        navigate("/HomeAgent");}
+        navigate("/Agent/HomeAgent", { state: { userEmail: data.email,userMatricule:data.matricule }})}
       else if (userRole === "admin") {
         navigate("/dashboardAdmin");
       } else {

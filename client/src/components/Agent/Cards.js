@@ -1,29 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import './Cards.css';
 import CardItem from './CardItem';
-import { useGetFormationsByUserEmailQuery, useGetPopulationsQuery, useGetModulesQuery, useAcceptFormationMutation, useRefuseFormationMutation } from '../../state/api';
+import { useGetFormationsByUserEmailPopulationQuery, useGetPopulationsQuery, useGetModulesQuery } from '../../state/api';
 
 import MaterialReactTable from 'material-react-table';
 import { useLocation } from 'react-router-dom';
 
 function Cards({ userEmail }) {
-
   const [refresh, setRefresh] = useState(0); // State variable for force refreshing
 
-  const [formations, setFormations] = useState([]);
-
-
-  const { data: apiData = [], error: formationsError, isLoading: isFormationsLoading } = useGetFormationsByUserEmailQuery(userEmail);
+  const { data: apiData = [], error: formationsError, isLoading: isFormationsLoading } = useGetFormationsByUserEmailPopulationQuery({ userEmail });
   const { data: populationCiblesData, error: populationsError, isLoading: isPopulationsLoading } = useGetPopulationsQuery(); // Fetch population cible data
   const { data: modulesData, error: modulesError, isLoading: isModulesLoading } = useGetModulesQuery(); // Fetch modules data
 
-  
   const { pathname } = useLocation();
   useEffect(() => {
-    // Set the local state with the data fetched from the API
-    setFormations(apiData);
     console.log('Current Route:', pathname);
-  }, [apiData, pathname, refresh]); // Include the 'refresh' state variable in the dependency array
+    console.log('Population Cibles Data:', populationCiblesData);
+    console.log('User Email:', userEmail);
+  }, [pathname, populationCiblesData, userEmail]);
 
   // Create a columns array to define table columns
   const columns = [
@@ -54,8 +49,8 @@ function Cards({ userEmail }) {
     // Add more columns as needed
   ];
 
-  // Format the formations data to match the table columns
-  const tableData = formations.map((formation) => ({
+  // Format the filtered formations data to match the table columns
+  const tableData = apiData.map((formation) => ({
     modules: formation.modules.map((moduleId) => {
       const module = modulesData?.find((m) => m._id === moduleId);
       return module ? module.nom : 'Unknown Module';
@@ -70,7 +65,7 @@ function Cards({ userEmail }) {
   }));
 
   return (
-    <div >
+    <div>
       {isFormationsLoading || isPopulationsLoading || isModulesLoading ? (
         <p>Loading formations...</p>
       ) : formationsError || populationsError || modulesError ? (
@@ -82,7 +77,6 @@ function Cards({ userEmail }) {
       )}
     </div>
   );
-};
-
+}
 
 export default Cards;

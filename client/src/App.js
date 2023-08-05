@@ -41,6 +41,9 @@ import { useEffect, useState } from "react"; // Add the useEffect and useState i
 import './style.css'
 import Home from "./Home";
 import Room from "./Room";
+import HomeAgent from "./components/Agent/Home"
+import NavbarAgent from "./components/Agent/Navbar"
+import CardAgent from "./components/Agent/Cards"
 function App() {
 	//Admin panel
 	const mode = useSelector((state) => state.global.mode);
@@ -97,7 +100,12 @@ function App() {
 		  <Route path="datagrid" element={<DataGrid/>}/>
 				</Route>
 
-{/*  */}
+{/*  Agent*/}
+ {/* Agent */}
+ <Route path="/Agent/*" element={<NavbarAgent userEmail={userEmail} userMatricule={userMatricule} />}>
+        <Route path="HomeAgent" element={<HomeAgent userEmail={userEmail} userMatricule={userMatricule} />} />
+		<Route path="CardAgent" element={<CardAgent userEmail={userEmail} userMatricule={userMatricule} />} />
+      </Route>
 			{user && <Route path="/" exact element={<Main />} />}
 			{/* Admin Panel */}
 			<Route element={<Layout/>}>
