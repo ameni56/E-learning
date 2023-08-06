@@ -31,22 +31,16 @@ import {
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
   import FlexBetween from "./FlexBetween";
-  import profileImage from "../assets/profile.jpeg";
 
+  import logo from '../../src/components/images/logoTT.png';
 
    
         const navItems = [
-            {
-              text: "Dashboard",
-              icon: <HomeOutlined />,
-            },
-            {
-              text: "Client Facing",
-              icon: null,
-            },
+           
+           
             {
               text: "Formations",
-              icon: <ShoppingCartOutlined />,
+              icon: <HomeOutlined />,
             },
             {
               text: "Agents",
@@ -69,15 +63,15 @@ import { useLocation, useNavigate } from "react-router-dom";
               icon: null,
             },
             {
-              text: "Overview",
+              text: "Statistiques",
               icon: <PointOfSaleOutlined />,
             },
             {
-              text: "Daily",
+              text: "Journal",
               icon: <TodayOutlined />,
             },
             {
-              text: "Monthly",
+              text: "Calendrier",
               icon: <CalendarMonthOutlined />,
             },
             // {
@@ -136,9 +130,10 @@ import { useLocation, useNavigate } from "react-router-dom";
             <Box m="1.5rem 2rem 2rem 3rem">
               <FlexBetween color={theme.palette.secondary.main}>
                 <Box display="flex" alignItems="center" gap="0.5rem">
-                  <Typography variant="h8" fontWeight="bold">
-                    TT ACADEMY
-                  </Typography>
+                <div className="logo">
+        <img src={logo} alt="easyclass" />
+        <h4>TT Académie</h4>
+      </div>
                 </Box>
                 {!isNonMobile && (
                   <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
@@ -202,15 +197,7 @@ import { useLocation, useNavigate } from "react-router-dom";
             <Box position="absolute" bottom="2rem">
             <Divider />
             <FlexBetween textTransform="none" gap="1rem" m="1.5rem 2rem 0 3rem">
-              <Box
-                component="img"
-                alt="profile"
-                src={profileImage}
-                height="40px"
-                width="40px"
-                borderRadius="50%"
-                sx={{ objectFit: "cover" }}
-              />
+             
               <Box textAlign="left">
                 <Typography
                   fontWeight="bold"

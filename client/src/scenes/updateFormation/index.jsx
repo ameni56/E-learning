@@ -124,10 +124,10 @@ const handleRemoveFormateur = (formateurId) => {
   return (
     <Box maxWidth={800} mx="auto" mt={4} p={3} boxShadow={3} borderRadius={4}>
       <Typography variant="h4" align="center" mb={3}>
-        Edit Formation
+        Modifier Formation
       </Typography>
       <form onSubmit={handleSubmit}>
-        <TextField
+        {/* <TextField
           name="description"
           label="Description"
           value={updatedFormation?.description || ""}
@@ -138,7 +138,7 @@ const handleRemoveFormateur = (formateurId) => {
           rows={4}
           variant="outlined"
           sx={{ width: 400 }}
-        />
+        /> */}
         <TextField
           name="objectifs"
           label="Objectifs"
@@ -147,24 +147,14 @@ const handleRemoveFormateur = (formateurId) => {
           fullWidth
           margin="normal"
           multiline
-          rows={4}
+         
           variant="outlined"
           sx={{ width: 400 }}
         />
 
         {/* Chips for selected modules */}
+        <Box mt={2}>
         <InputLabel>Modules</InputLabel>
-        {selectedModules.map((module) => (
-          <Chip
-            key={module._id}
-            label={module.nom}
-            onDelete={() => handleRemoveModule(module._id)}
-            color="primary"
-            sx={{ m: 0.5 }}
-          />
-        ))}
-
-        {/* Select dropdown for modules */}
         <Select
           name="modules"
           value={""} // Provide a value to reset the select dropdown after selecting an option
@@ -180,20 +170,22 @@ const handleRemoveFormateur = (formateurId) => {
               </MenuItem>
             ))}
         </Select>
-
-        {/* Chips for selected population cibles */}
-        <InputLabel>Population Cible</InputLabel>
-        {selectedPopulationCibles.map((popCible) => (
+        {selectedModules.map((module) => (
           <Chip
-            key={popCible._id}
-            label={popCible.nom}
-            onDelete={() => handleRemovePopulation(popCible._id)}
+            key={module._id}
+            label={module.nom}
+            onDelete={() => handleRemoveModule(module._id)}
             color="primary"
             sx={{ m: 0.5 }}
           />
         ))}
+</Box>
+        {/* Select dropdown for modules */}
+       
 
-        {/* Select dropdown for population cible */}
+        {/* Chips for selected population cibles */}
+        <Box mt={2}>
+        <InputLabel>Population Cible</InputLabel>
         <Select
           name="populationCible"
           value={""} // Provide a value to reset the select dropdown after selecting an option
@@ -209,20 +201,23 @@ const handleRemoveFormateur = (formateurId) => {
               </MenuItem>
             ))}
         </Select>
-{/* Chips for selected formateurs */}
-<InputLabel>Nom Formateur</InputLabel>
-        {selectedFormateurs.map((formateur) => (
+        {selectedPopulationCibles.map((popCible) => (
           <Chip
-            key={formateur._id}
-            label={formateur.email}
-            onDelete={() => handleRemoveFormateur(formateur._id)}
+            key={popCible._id}
+            label={popCible.nom}
+            onDelete={() => handleRemovePopulation(popCible._id)}
             color="primary"
             sx={{ m: 0.5 }}
           />
         ))}
 
-        {/* Select dropdown for formateurs */}
-        <Select
+        {/* Select dropdown for population cible */}
+      
+        </Box>
+{/* Chips for selected formateurs */}
+<Box mt={2}>
+<InputLabel>Email du formateur</InputLabel>
+<Select
           name="nomFormateur"
           value={""} // Provide a value to reset the select dropdown after selecting an option
           onChange={(e) => handleAddFormateur(e.target.value)}
@@ -237,9 +232,21 @@ const handleRemoveFormateur = (formateurId) => {
               </MenuItem>
             ))}
         </Select>
+        {selectedFormateurs.map((formateur) => (
+          <Chip
+            key={formateur._id}
+            label={formateur.email}
+            onDelete={() => handleRemoveFormateur(formateur._id)}
+            color="primary"
+            sx={{ m: 0.5 }}
+          />
+        ))}
+
+        {/* Select dropdown for formateurs */}
         
+        </Box>
         <Button variant="contained" type="submit" color="primary" fullWidth size="large">
-          Update
+          Modifier
         </Button>
       </form>
     </Box>

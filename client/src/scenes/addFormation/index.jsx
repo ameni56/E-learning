@@ -24,7 +24,7 @@ const AddFormation = () => {
     duree: 0,
     objectifs: [],
     lienMeet: "",
-    cours: [],
+    cours: "",
     modules: [],
     populationCible: [],
     nomFormateur: [],
@@ -135,31 +135,27 @@ const AddFormation = () => {
   console.log("formationData.nomFormateur", formationData.nomFormateur);
   return (
     <Box m="1.5rem 2.5rem">
-      <h1>Ajouter une formation</h1>
+      
+      <h1 style={{ marginBottom: "1rem" ,marginLeft:"350px"}}>Ajouter une formation</h1>
       <form onSubmit={handleSubmit}>
-        <TextField
+
+      <TextField
           name="objectifs"
           label="Objectifs"
           value={formationData.objectifs}
           onChange={handleChange}
           fullWidth
           required
+          style={{width:"500px",marginLeft:"-170px"}}
         />
-        <TextField
-          name="duree"
-          label="Durée"
-          type="number"
-          value={formationData.duree}
-          onChange={handleChange}
-          fullWidth
-          required
-        />
-        <InputLabel>Module</InputLabel>
+      <Box mt={2}>
+      <InputLabel  style={{width:"500px",marginLeft:"-170px"}}>Modules </InputLabel>
         <Select
           name="modules"
           onChange={(e) => handleAddModule(e.target.value)}
           fullWidth
           required
+          style={{width:"500px",marginLeft:"-170px"}}
         >
           {isLoadingModules ? (
             <MenuItem value="">Loading...</MenuItem>
@@ -183,38 +179,10 @@ const AddFormation = () => {
             />
           ))}
         </Box>
-        <InputLabel>Population Cible</InputLabel>
-        <Select
-          name="populationCible"
-          onChange={(e) => handleAddPopulation(e.target.value)}
-          fullWidth
-          required
-        >
-          {isLoadingPopulations ? (
-            <MenuItem value="">Loading...</MenuItem>
-          ) : (
-            populations
-              .filter((population) => !formationData.populationCible.includes(population._id))
-              .map((population) => (
-                <MenuItem key={population._id} value={population._id}>
-                  {population.nom}
-                </MenuItem>
-              ))
-          )}
-        </Select>
-        <Box>
-          {formationData.populationCible.map((population) => (
-            <Chip
-              key={population}
-              label={
-                populations.find((p) => p._id === population)?.nom || "Unknown Population"
-              }
-              onDelete={() => handleRemovePopulation(population)}
-              style={{ margin: "0.5rem 0.5rem 0 0" }}
-            />
-          ))}
         </Box>
-        <InputLabel>Nom Formateur</InputLabel>
+       
+      <Box mt={2}>
+      <InputLabel  style={{width:"500px",marginLeft:"-170px"}}>Nom du formateur</InputLabel>
         <Select
           name="nomFormateur"
          
@@ -222,6 +190,7 @@ const AddFormation = () => {
           onChange={(e) => handleAddFormateur(e.target.value)}
           fullWidth
           required
+          style={{width:"500px",marginLeft:"-170px"}}
         >
           {isLoadingFormateurs ? (
             <MenuItem value="">Loading...</MenuItem>
@@ -248,25 +217,80 @@ const AddFormation = () => {
             />
           ))}
         </Box>
+
+</Box>
+
+        
+        {/* <TextField
+          name="duree"
+          label="Durée"
+          type="number"
+          value={formationData.duree}
+          onChange={handleChange}
+          fullWidth
+          required
+        /> */}
+        <Box mt={2}>
+        <InputLabel  style={{width:"500px",marginLeft:"-170px"}}>Population Cible</InputLabel>
+        <Select
+          name="populationCible"
+          onChange={(e) => handleAddPopulation(e.target.value)}
+          fullWidth
+          required
+          style={{width:"500px",marginLeft:"-170px"}}
+        >
+          {isLoadingPopulations ? (
+            <MenuItem value="">Loading...</MenuItem>
+          ) : (
+            populations
+              .filter((population) => !formationData.populationCible.includes(population._id))
+              .map((population) => (
+                <MenuItem key={population._id} value={population._id}>
+                  {population.nom}
+                </MenuItem>
+              ))
+          )}
+        </Select>
+        <Box>
+          {formationData.populationCible.map((population) => (
+            <Chip
+              key={population}
+              label={
+                populations.find((p) => p._id === population)?.nom || "Unknown Population"
+              }
+              onDelete={() => handleRemovePopulation(population)}
+              style={{ margin: "0.5rem 0.5rem 0 0" }}
+            />
+          ))}
+        </Box>
+        </Box>
+        <Box mt={2}>
+        <InputLabel  style={{width:"500px",marginLeft:"-170px"}}>Date début </InputLabel>
         <TextField
           name="dateDebut"
-          label="Date Debut"
+          // label="Date Debut"
           type="datetime-local"
           value={formationData.dateDebut}
           onChange={handleChange}
           fullWidth
           required
+          style={{width:"500px",marginLeft:"-170px"}}
         />
+        </Box>
+        <Box mt={2}>
+        <InputLabel  style={{width:"500px",marginLeft:"-170px"}}>Date Fin </InputLabel>
         <TextField
           name="dateFin"
-          label="dateFin"
+          // label="dateFin"
           type="datetime-local"
           value={formationData.dateFin}
           onChange={handleChange}
           fullWidth
           required
+          style={{width:"500px",marginLeft:"-170px"}}
         />
-        <Button type="submit" variant="contained" sx={{ mt: 2 }}>
+        </Box>
+        <Button type="submit" variant="contained" sx={{ mt: 2 }}  style={{width:"500px",marginLeft:"-170px"}}>
           Ajouter
         </Button>
       </form>

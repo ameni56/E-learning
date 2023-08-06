@@ -25,7 +25,7 @@ const formationSchema = new mongoose.Schema({
     type: String
   },
   cours: {
-    type: [String]
+    type: String
   },
   // Utilisation de "ref" pour établir une relation avec le modèle Module
   modules: [{

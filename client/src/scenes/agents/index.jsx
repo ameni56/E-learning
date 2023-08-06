@@ -9,19 +9,19 @@ const Agents = () => {
     const{data,isLoading}=useGetAgentsQuery();
     console.log("data",data)
     const columns=[
-        {
-            field:"_id",
-            headerName:"ID",
-            flex:1,
-        },
+        // {
+        //     field:"_id",
+        //     headerName:"ID",
+        //     flex:1,
+        // },
         {
             field:"firstName",
-            headerName:"FirstName",
+            headerName:"Prénom",
             flex:1,
         },
         {
             field:"lastName",
-            headerName:"LastName",
+            headerName:"Nom",
             flex:1,
         },
         {
@@ -50,7 +50,7 @@ const Agents = () => {
         //   },
         {
             field: "role",
-            headerName: "Role",
+            headerName: "Rôle",
             flex: 0.5,
           },
         
@@ -60,9 +60,9 @@ const Agents = () => {
     ]
 
 
-  return  (<Box m="1.5rem 2.5rem">
-    <Header title="CUSTOMERS" subtitle="Liste des agents"/>
-    <Box
+  return  ( <Box m="1.5rem 2.5rem">
+      <Header title="Liste d'agents" />
+      <Box
         mt="40px"
         height="75vh"
         sx={{
@@ -73,33 +73,39 @@ const Agents = () => {
             borderBottom: "none",
           },
           "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: theme.palette.background.alt,
+            backgroundColor: theme.palette.primary.light,
             color: theme.palette.secondary[100],
             borderBottom: "none",
           },
           "& .MuiDataGrid-virtualScroller": {
-            backgroundColor: theme.palette.primary.light,
+            backgroundColor: theme.palette.background.alt,
           },
           "& .MuiDataGrid-footerContainer": {
-            backgroundColor: theme.palette.background.alt,
+            backgroundColor: theme.palette.primary.light,
             color: theme.palette.secondary[100],
             borderTop: "none",
           },
           "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
             color: `${theme.palette.secondary[200]} !important`,
           },
+          "& .Mui-selected, .Mui-selected .MuiDataGrid-cell": {
+            backgroundColor: "transparent",
+            color: "inherit",
+          },
+          "& .MuiDataGrid-row:hover": {
+            backgroundColor: "transparent",
+          },
         }}
       >
         <DataGrid
-        loading={isLoading || !data}
-        getRowId={(row)=>row._id}
-        rows={data || []}
-        columns={columns}
+          loading={isLoading || !data}
+          getRowId={(row) => row._id}
+          rows={data || []}
+          columns={columns}
         />
+      </Box>
     </Box>
-
-        </Box>
-  )
-}
+  );
+};
 
 export default Agents;

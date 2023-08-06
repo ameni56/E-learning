@@ -135,7 +135,7 @@ const Home = () => {
         <div style={{ ...styles.heroContent, maxWidth: "90vw", margin: "0 auto" }}>
           {/* Main */}
           <div style={styles.mainText}>
-            Vidéo Conférence
+            Visioconférence
           </div>
           <p style={styles.subText}>Avec TT ACADEMY</p>
           {/* Enter Code */}

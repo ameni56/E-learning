@@ -15,6 +15,7 @@ const HomeAgent=()=> {
     <>
     {/* <Navbar userEmail={userEmail} /> Pass the userEmail prop to the Navbar component */}
       {/* <HeroSection /> */}
+      
       <Cards userEmail={userEmail}  />
       {/* <Footer /> */}
     </>

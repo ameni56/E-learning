@@ -32,6 +32,16 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
   const isOpen = Boolean(anchorEl);
   const handleClick = (event) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
+// Function to handle the logout action
+const handleLogout = () => {
+  // Clear the user data from Local Storage and navigate to the login page
+  localStorage.removeItem("userEmail");
+  localStorage.removeItem("userMatricule");
+  // You may also want to clear the authentication token here if you have one
+  // localStorage.removeItem("token");
+  // Redirect to the login page
+  window.location.href = "/login"; // or use the Navigate component if you prefer
+};
 
   return (
     <AppBar
@@ -84,7 +94,7 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
                 gap: "1rem",
               }}
             >
-              <Box
+              {/* <Box
                 component="img"
                 alt="profile"
                 src={profileImage}
@@ -92,7 +102,7 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
                 width="32px"
                 borderRadius="50%"
                 sx={{ objectFit: "cover" }}
-              />
+              /> */}
               <Box textAlign="left">
                 <Typography
                   fontWeight="bold"
@@ -118,7 +128,7 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
               onClose={handleClose}
               anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
             >
-              <MenuItem onClick={handleClose}>Log Out</MenuItem>
+              <MenuItem onClick={handleLogout}>Déconnecter</MenuItem>
             </Menu>
           </FlexBetween> 
         </FlexBetween>

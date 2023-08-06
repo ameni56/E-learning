@@ -1,10 +1,34 @@
+// src/components/Agent/Cards.js
 import React, { useEffect, useState } from 'react';
 import './Cards.css';
-import CardItem from './CardItem';
 import { useGetFormationsByUserEmailPopulationQuery, useGetPopulationsQuery, useGetModulesQuery } from '../../state/api';
-
 import MaterialReactTable from 'material-react-table';
 import { useLocation } from 'react-router-dom';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+
+function CardItem({ formation, modulesData }) {
+  // Use modulesData to access modules information
+  const modules = formation.modules.map((moduleId) => {
+    const module = modulesData?.find((m) => m._id === moduleId);
+    return module ? module.nom : 'Unknown Module';
+  }).join(', ');
+
+  // Format the date using toLocaleDateString
+  const formattedDateDebut = new Date(formation.dateDebut).toLocaleDateString();
+  const formattedDateFin = new Date(formation.dateFin).toLocaleDateString();
+
+  return (
+    <div className="card">
+      <h3 className="module-name">{modules}</h3>
+      <p className="description-text">{formation.description}</p>
+      <p className="date-label">Date début: <span>{formattedDateDebut}</span></p>
+      <p className="date-label">Date Fin: <span>{formattedDateFin}</span></p>
+      <a href={formation.lienMeet}>Lien Meet</a>
+    </div>
+  );
+}
 
 function Cards({ userEmail }) {
   const [refresh, setRefresh] = useState(0); // State variable for force refreshing
@@ -21,48 +45,16 @@ function Cards({ userEmail }) {
   }, [pathname, populationCiblesData, userEmail]);
 
   // Create a columns array to define table columns
-  const columns = [
-    {
-      accessorKey: 'modules',
-      header: 'Modules',
-    },
-    {
-      accessorKey: 'populationCible',
-      header: 'Population Cible',
-    },
-    {
-      accessorKey: 'description',
-      header: 'Description',
-    },
-    {
-      accessorKey: 'datedebut',
-      header: 'Date de début',
-    },
-    {
-      accessorKey: 'datefin',
-      header: 'Date de fin',
-    },
-    {
-      accessorKey: 'actions',
-      header: 'Actions', // Header for the Accept and Refuse buttons
-    },
-    // Add more columns as needed
-  ];
+  const filteredData = apiData.filter((formation) => formation.formateurAccepte === true);
 
-  // Format the filtered formations data to match the table columns
-  const tableData = apiData.map((formation) => ({
-    modules: formation.modules.map((moduleId) => {
-      const module = modulesData?.find((m) => m._id === moduleId);
-      return module ? module.nom : 'Unknown Module';
-    }).join(', '),
-    populationCible: formation.populationCible.map((populationId) => {
-      const population = populationCiblesData?.find((p) => p._id === populationId);
-      return population ? population.nom : 'Unknown Population Cible';
-    }).join(', '),
-    description: formation.description,
-    datedebut: formation.dateDebut,
-    datefin: formation.dateFin,
-  }));
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    centerMode: true,
+  };
 
   return (
     <div>
@@ -71,8 +63,14 @@ function Cards({ userEmail }) {
       ) : formationsError || populationsError || modulesError ? (
         <p>Error fetching data: {formationsError?.message || populationsError?.message || modulesError?.message}</p>
       ) : (
-        <div className="table-container">
-          <MaterialReactTable columns={columns} data={tableData} />
+        <div className="carousel-container">
+          <Slider {...settings}>
+            {filteredData.map((formation, index) => (
+              <div key={index}>
+                <CardItem formation={formation} modulesData={modulesData} />
+              </div>
+            ))}
+          </Slider>
         </div>
       )}
     </div>

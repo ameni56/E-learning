@@ -1,22 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import css from './FormationFormateur.module.css';
-import { useGetFormationsByUserEmailQuery, useGetPopulationsQuery, useGetModulesQuery, useAcceptFormationMutation, useRefuseFormationMutation } from '../../state/api';
+import { Box, Typography, Modal } from '@mui/material';
+import { useGetFormationsByUserEmailQuery, useGetPopulationsQuery, useGetModulesQuery, useAcceptFormationMutation, useRefuseFormationMutation, useUpdateFormationMutation, useGetFormateursQuery } from '../../state/api';
 import { useLocation } from 'react-router-dom';
 import MaterialReactTable from 'material-react-table';
-import { FaCheck, FaTimes } from 'react-icons/fa'; // Import the icons from the react-icons library
+import { FaCheck, FaTimes } from 'react-icons/fa';
+import EditFormationModal from '../EditFormationModal/EditFormationModal';
 
 const FormationFormateur = ({ userEmail }) => {
-  const [refresh, setRefresh] = useState(0); // State variable for force refreshing
+  const [refresh, setRefresh] = useState(0);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [selectedFormation, setSelectedFormation] = useState(null);
 
   const [formations, setFormations] = useState([]);
 
   const { data: apiData = [], error: formationsError, isLoading: isFormationsLoading } = useGetFormationsByUserEmailQuery(userEmail);
-  const { data: populationCiblesData, error: populationsError, isLoading: isPopulationsLoading } = useGetPopulationsQuery(); // Fetch population cible data
-  const { data: modulesData, error: modulesError, isLoading: isModulesLoading } = useGetModulesQuery(); // Fetch modules data
+  const { data: populationCiblesData, error: populationsError, isLoading: isPopulationsLoading } = useGetPopulationsQuery();
+  const { data: modulesData, error: modulesError, isLoading: isModulesLoading } = useGetModulesQuery();
+  const { data: formateursData, error: formateursError, isLoading: isFormateursLoading } = useGetFormateursQuery();
 
-  // Mutation hooks for accepting and refusing formations
   const [acceptFormation] = useAcceptFormationMutation();
   const [refuseFormation] = useRefuseFormationMutation();
+  const [updateFormation] = useUpdateFormationMutation();
 
   const { pathname } = useLocation();
 
@@ -37,7 +42,6 @@ const FormationFormateur = ({ userEmail }) => {
   const handleAcceptFormation = async (formationId) => {
     try {
       await acceptFormation(formationId);
-      // Update local state to reflect the change immediately
       const updatedFormations = formations.map((formation) =>
         formation._id === formationId ? { ...formation, formateurAccepte: true } : formation
       );
@@ -50,7 +54,6 @@ const FormationFormateur = ({ userEmail }) => {
   const handleRefuseFormation = async (formationId) => {
     try {
       await refuseFormation(formationId);
-      // Update local state to reflect the change immediately
       const updatedFormations = formations.map((formation) =>
         formation._id === formationId ? { ...formation, formateurAccepte: false } : formation
       );
@@ -62,7 +65,6 @@ const FormationFormateur = ({ userEmail }) => {
 
   const handleFormateurAction = (formation, action) => {
     if (formation.formateurAccepte === null) {
-      // If formateurAccepte is null, show the confirmation window for accept or refuse
       if (action === 'accept') {
         handleAcceptConfirmation(formation._id);
       } else if (action === 'refuse') {
@@ -71,13 +73,22 @@ const FormationFormateur = ({ userEmail }) => {
     }
   };
 
+  const handleModifyFormation = (formation) => {
+    // Allow modification only if the formation is accepted (formateurAccepte === true)
+    if (formation.formateurAccepte === true) {
+      setSelectedFormation(formation);
+      setShowEditModal(true);
+    } else {
+      // Show a message or alert to inform the user that the formation must be accepted first
+      alert('Vous pouvez modifier seulement si vous acceptez cette formation.');
+    }
+  };
+
   useEffect(() => {
-    // Set the local state with the data fetched from the API
     setFormations(apiData);
     console.log('Current Route:', pathname);
-  }, [apiData, pathname, refresh]); // Include the 'refresh' state variable in the dependency array
+  }, [apiData, pathname, refresh]);
 
-  // Create a columns array to define table columns
   const columns = [
     {
       accessorKey: 'modules',
@@ -92,6 +103,10 @@ const FormationFormateur = ({ userEmail }) => {
       header: 'Description',
     },
     {
+      accessorKey: 'lienMeet',
+      header: 'Lien Meet',
+    },
+    {
       accessorKey: 'datedebut',
       header: 'Date de début',
     },
@@ -101,12 +116,10 @@ const FormationFormateur = ({ userEmail }) => {
     },
     {
       accessorKey: 'actions',
-      header: 'Actions', // Header for the Accept and Refuse buttons
+      header: 'Actions',
     },
-    // Add more columns as needed
   ];
 
-  // Format the formations data to match the table columns
   const tableData = formations.map((formation) => ({
     modules: formation.modules.map((moduleId) => {
       const module = modulesData?.find((m) => m._id === moduleId);
@@ -117,43 +130,50 @@ const FormationFormateur = ({ userEmail }) => {
       return population ? population.nom : 'Unknown Population Cible';
     }).join(', '),
     description: formation.description,
+    lienMeet: formation.lienMeet,
     datedebut: formation.dateDebut,
     datefin: formation.dateFin,
-    actions: ( // Render the Accept and Refuse buttons
-    <div className={css.button}>
-    {formation.formateurAccepte === true && <div className={css.accepted}>Accepté</div>}
-    {formation.formateurAccepte === false && <div className={css.refused}>Refusé</div>}
-    {formation.formateurAccepte === null && (
-      <>
+    actions: (
+      <div className={css.button}>
+        {formation.formateurAccepte === true && <div className={css.accepted}>Accepté</div>}
+        {formation.formateurAccepte === false && <div className={css.refused}>Refusé</div>}
         <button
-  className={`${css.refuse}`}
-  onClick={() => handleFormateurAction(formation, 'refuse')}
-  disabled={formation.formateurAccepte !== null}
->
-  Refuser
-</button>
-<button
-  className={`${css.accept}`}
-  onClick={() => handleFormateurAction(formation, 'accept')}
-  disabled={formation.formateurAccepte !== null}
->
-  Accepter
-</button>
-      </>
-    )}
-  </div>
+          className={`${css.modify}`}
+          onClick={() => handleModifyFormation(formation)}
+          disabled={formation.formateurAccepte !== true}
+        >
+          Modifier
+        </button>
+      </div>
     ),
   }));
+  // Update the mapping function to handle empty description and lienMeet
+tableData.forEach((data) => {
+  if (!data.description) {
+    data.description = 'Aucune description';
+  }
+  if (!data.lienMeet) {
+    data.lienMeet = 'Aucun lien ';
+  }
+});
 
   return (
     <div className={css.container}>
-      {isFormationsLoading || isPopulationsLoading || isModulesLoading ? (
+      {isFormationsLoading || isPopulationsLoading || isModulesLoading || isFormateursLoading ? (
         <p>Loading formations...</p>
-      ) : formationsError || populationsError || modulesError ? (
-        <p>Error fetching data: {formationsError?.message || populationsError?.message || modulesError?.message}</p>
+      ) : formationsError || populationsError || modulesError || formateursError ? (
+        <p>Error fetching data: {formationsError?.message || populationsError?.message || modulesError?.message || formateursError?.message}</p>
       ) : (
         <div className="table-container">
           <MaterialReactTable columns={columns} data={tableData} />
+          {showEditModal && selectedFormation && (
+            <EditFormationModal
+              formation={selectedFormation}
+              open={showEditModal}
+              onClose={() => setShowEditModal(false)}
+              refreshFormations={() => setRefresh((prev) => prev + 1)}
+            />
+          )}
         </div>
       )}
     </div>

@@ -36,6 +36,7 @@ import CalendarFormateur from './pages/Calendar/Calendar';
 import BoardPageFormateur from  './pages/Board/Board';
 import DataGrid from './pages/DataGrid/DataGrid';
 import FormationFormateur from './pages/FormationFormateur/FormationFormateur';
+import EditFormationModal from "./pages/EditFormationModal/EditFormationModal";
 import useAuth from "./components/useAuth/useAuth";
 import { useEffect, useState } from "react"; // Add the useEffect and useState imports
 import './style.css'
@@ -44,6 +45,7 @@ import Room from "./Room";
 import HomeAgent from "./components/Agent/Home"
 import NavbarAgent from "./components/Agent/Navbar"
 import CardAgent from "./components/Agent/Cards"
+
 function App() {
 	//Admin panel
 	const mode = useSelector((state) => state.global.mode);
@@ -94,10 +96,11 @@ function App() {
           >
 				<Route path="DashboardFormateur" element={<DashboardFormateur userEmail={userEmail} />}/> 
 				<Route path="FormationFormateur" element={<FormationFormateur userEmail={userEmail} userMatricule={userMatricule}/>}/> 
-				
+				<Route path="EditFormation" element={<EditFormationModal userEmail={userEmail} userMatricule={userMatricule}/>}/> 
           <Route path="calendarFormateur" element={<CalendarFormateur/>}/>
           <Route path="boardFormateur" element={<BoardPageFormateur/>}/>
 		  <Route path="datagrid" element={<DataGrid/>}/>
+
 				</Route>
 
 {/*  Agent*/}

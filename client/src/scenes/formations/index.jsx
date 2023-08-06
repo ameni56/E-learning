@@ -99,7 +99,7 @@ const Formation = ({
 
         {/* <Typography variant="body2">Nom Formateur: {nomFormateurData ? nomFormateurData.email: nomFormateur}</Typography> */}
         <Typography variant="body2">
-        nomFormateurData:{" "}
+        Email du formateur :{" "}
           {nomFormateurData && nomFormateurData.length > 0 ? (
             nomFormateur
               .map((nomFormateurId) =>
@@ -113,7 +113,7 @@ const Formation = ({
 
 
         <Typography variant="body2">
-          Population cible:{" "}
+          Population cible :{" "}
           {populationCiblesData && populationCiblesData.length > 0 ? (
             populationCible
               .map((populationCibleId) =>
@@ -127,7 +127,7 @@ const Formation = ({
       </CardContent>
       <CardActions>
         <Button size="small" onClick={handleShowDetails}>
-          View Details
+          Voir Détails
         </Button>
         <IconButton aria-label="Edit Formation" onClick={handleEdit}>
           <Edit />
@@ -141,10 +141,10 @@ const Formation = ({
         </IconButton>
       </CardActions>
       <Dialog open={showDetails} onClose={handleCloseDetails}>
-        <DialogTitle>Formation Details</DialogTitle>
+        <DialogTitle>Détails Formation</DialogTitle>
         <DialogContent>
           <Typography>
-            Module:{" "}
+            Module :{" "}
             {modulesData && modulesData.length > 0 ? (
               modules
                 .map((moduleId) =>
@@ -155,7 +155,7 @@ const Formation = ({
               <span>Loading...</span>
             )}
           </Typography>
-          <Typography>Objectif: {objectifs}</Typography>
+          <Typography>Objectif : {objectifs}</Typography>
           <Typography>
             Population cible:{" "}
             {populationCiblesData && populationCiblesData.length > 0 ? (
@@ -169,8 +169,8 @@ const Formation = ({
             )}
           </Typography>
           {/* <Typography>Nom du formateur: {nomFormateurData ? nomFormateurData.email : nomFormateur}</Typography> */}
-          <Typography variant="body2">
-        nomFormateurData:{" "}
+          <Typography >
+        Email du formateur :{" "}
           {nomFormateurData && nomFormateurData.length > 0 ? (
             nomFormateur
               .map((nomFormateurId) =>

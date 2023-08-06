@@ -54,3 +54,25 @@
     background-color: #b2bec3; /* Light gray color when disabled */
     cursor: not-allowed;
   }
+  .modify {
+    /* Your styles for the modifier button */
+    background-color: #4bdeec;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    margin-right: 5px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+  }
+  
+  .modify:hover {
+    background-color: #0056b3;
+  }
+ 
+  
+  
+  
+  .refusedRow {
+    background-color: #f2f2f2; /* Gray color for the row */
+  }

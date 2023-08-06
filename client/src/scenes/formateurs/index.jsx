@@ -9,19 +9,19 @@ const Formateurs = () => {
     const{data,isLoading}=useGetFormateursQuery();
     console.log("data",data)
     const columns=[
-        {
-            field:"_id",
-            headerName:"ID",
-            flex:1,
-        },
+        // {
+        //     field:"_id",
+        //     headerName:"ID",
+        //     flex:1,
+        // },
         {
             field:"firstName",
-            headerName:"FirstName",
+            headerName:"Prénom",
             flex:1,
         },
         {
             field:"lastName",
-            headerName:"LastName",
+            headerName:"Nom",
             flex:1,
         },
         {
@@ -50,7 +50,7 @@ const Formateurs = () => {
         //   },
         {
             field: "role",
-            headerName: "Role",
+            headerName: "Rôle",
             flex: 0.5,
           },
         
@@ -61,7 +61,7 @@ const Formateurs = () => {
 
 
   return  (<Box m="1.5rem 2.5rem">
-    <Header title="CUSTOMERS" subtitle="Liste des Formateurs"/>
+    <Header title="Liste des Formateurs" />
     <Box
         mt="40px"
         height="75vh"
@@ -73,15 +73,17 @@ const Formateurs = () => {
             borderBottom: "none",
           },
           "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: theme.palette.background.alt,
+            backgroundColor: theme.palette.primary.light,
             color: theme.palette.secondary[100],
             borderBottom: "none",
           },
           "& .MuiDataGrid-virtualScroller": {
-            backgroundColor: theme.palette.primary.light,
+          
+            backgroundColor: theme.palette.background.alt,
+
           },
           "& .MuiDataGrid-footerContainer": {
-            backgroundColor: theme.palette.background.alt,
+            backgroundColor: theme.palette.primary.light,
             color: theme.palette.secondary[100],
             borderTop: "none",
           },
