@@ -16,12 +16,12 @@ const Formateurs = () => {
         // },
         {
             field:"firstName",
-            headerName:"Prénom",
+            headerName:"Nom",
             flex:1,
         },
         {
             field:"lastName",
-            headerName:"Nom",
+            headerName:"Prénom",
             flex:1,
         },
         {
@@ -61,7 +61,7 @@ const Formateurs = () => {
 
 
   return  (<Box m="1.5rem 2.5rem">
-    <Header title="Liste des Formateurs" />
+    <Header title="Formateurs" />
     <Box
         mt="40px"
         height="75vh"

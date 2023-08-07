@@ -138,9 +138,9 @@ const FormationFormateur = ({ userEmail }) => {
         {formation.formateurAccepte === true && <div className={css.accepted}>Accepté</div>}
         {formation.formateurAccepte === false && <div className={css.refused}>Refusé</div>}
         <button
-          className={`${css.modify}`}
+          className={`${css.modify} ${formation.formateurAccepte === false ? css.modifydisabled : ''}`}
           onClick={() => handleModifyFormation(formation)}
-          disabled={formation.formateurAccepte !== true}
+          disabled={formation.formateurAccepte === false}
         >
           Modifier
         </button>

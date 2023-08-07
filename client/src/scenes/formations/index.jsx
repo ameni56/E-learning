@@ -20,7 +20,7 @@ import { Edit, Delete, Add } from "@mui/icons-material";
 import Header from "../../components/Header";
 import { useGetModulesQuery, useUpdateFormationMutation, useDeleteFormationMutation, useGetFormationsQuery, useCreateFormationMutation, useGetPopulationsQuery, useGetFormateursQuery } from "../../state/api";
 import { useNavigate } from "react-router-dom";
-
+import { TextField } from "@mui/material";
 // Formation component
 const Formation = ({
   _id,
@@ -50,6 +50,11 @@ const Formation = ({
   const [updateFormation] = useUpdateFormationMutation();
   const [deleteFormation] = useDeleteFormationMutation();
   const [createFormation] = useCreateFormationMutation();
+ const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
 
   const handleEdit = () => {
     navigate(`/formations/${_id}`);

@@ -38,23 +38,27 @@ const EditPopulation = () => {
 
   return (
     <Box maxWidth={800} mx="auto" mt={4} p={3} boxShadow={3} borderRadius={4}>
-      <Header title="POPULATION" subtitle="Modifier une population" />
+      {/* <Header subtitle="Modifier population" /> */}
       <Typography variant="h4" align="center" mb={3}>
-        Edit Population
+        Modifier population
       </Typography>
       <form onSubmit={handleSubmit}>
+      <Box mt={2}>
         <TextField
           name="nom"
-          label="Nom"
+          label="Nom population"
           value={updatedPopulation?.nom || ""}
           onChange={handleChange}
           fullWidth
           margin="normal"
           variant="outlined"
-          sx={{ width: 400 }}
+          required
+          sx={{ width: 600,marginLeft:"-170px" }}
+       
         />
+        </Box>
         <Button variant="contained" type="submit" color="primary" fullWidth size="large">
-          Update
+         Update
         </Button>
       </form>
     </Box>

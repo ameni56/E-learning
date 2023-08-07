@@ -87,12 +87,9 @@ function App() {
 			   <Route
             path="/LayoutFormateur"
             element={
-              useAuth() ? (
-                <LayoutFormateur userEmail={userEmail} userMatricule={userMatricule} />
-              ) : (
-                <Navigate to="/login" replace />
-              )
-            }
+             
+                <LayoutFormateur userEmail={userEmail} userMatricule={userMatricule} />}
+              
           >
 				<Route path="DashboardFormateur" element={<DashboardFormateur userEmail={userEmail} />}/> 
 				<Route path="FormationFormateur" element={<FormationFormateur userEmail={userEmail} userMatricule={userMatricule}/>}/> 

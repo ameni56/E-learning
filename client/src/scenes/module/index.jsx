@@ -69,24 +69,24 @@ const Module = () => {
   const columns = [
     {
       field: "nom",
-      headerName: "Nom",
+      headerName: "Module",
       flex: 1,
     },
     {
       field: "createdAt",
-      headerName: "Created At",
+      headerName: "Date de création",
       flex: 1,
       valueGetter: (params) => new Date(params.row.createdAt).toLocaleString(),
     },
     {
       field: "updatedAt",
-      headerName: "Updated At",
+      headerName: "Date de modification",
       flex: 1,
       valueGetter: (params) => new Date(params.row.updatedAt).toLocaleString(),
     },
     {
       field: "actions",
-      headerName: "Actions",
+      headerName: "Modifier/Supprimer",
       sortable: false,
       flex: 1,
       renderCell: (params) => {
@@ -117,13 +117,13 @@ const Module = () => {
 
   return (
     <Box m="1.5rem 2.5rem">
-      <Header title="MODULE" subtitle="List of modules" />
+      <Header title="Modules"  />
       <Box display="flex" alignItems="center" mb="1rem">
         <Button variant="contained" startIcon={<Add />} onClick={handleAddModule}>
-          Add Module
+         Ajouter module
         </Button>
         <TextField
-          label="Search by Name"
+          label="Rechercher"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           variant="outlined"
@@ -167,10 +167,10 @@ const Module = () => {
       </Box>
 
       <Dialog open={openAddDialog} onClose={handleCloseAddDialog}>
-        <DialogTitle>Add Module</DialogTitle>
+        <DialogTitle>Ajouter Module</DialogTitle>
         <DialogContent>
           <TextField
-            label="Module Name"
+            label="Nom module"
             value={newModuleName}
             onChange={handleNewModuleNameChange}
             fullWidth
@@ -179,25 +179,25 @@ const Module = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseAddDialog} color="primary">
-            Cancel
+            Annuler
           </Button>
           <Button onClick={handleSaveModule} color="primary" variant="contained">
-            Save
+           Confirmer
           </Button>
         </DialogActions>
       </Dialog>
 
       <Dialog open={openDeleteConfirmation} onClose={handleCancelDelete}>
-        <DialogTitle>Confirm Delete</DialogTitle>
+        <DialogTitle>Confirmer suppression</DialogTitle>
         <DialogContent>
-          Are you sure you want to delete this module?
+        Vous-voulez vraiment supprimer ce module .
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCancelDelete} color="primary">
-            Cancel
+           Annuler
           </Button>
           <Button onClick={handleConfirmDelete} sx={{ color: "red" }}>
-            Delete
+          Supprimer
           </Button>
         </DialogActions>
       </Dialog>

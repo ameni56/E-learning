@@ -69,24 +69,24 @@ const Population = () => {
   const columns = [
     {
       field: "nom",
-      headerName: "Nom",
+      headerName: "Population",
       flex: 1,
     },
     {
       field: "createdAt",
-      headerName: "Created At",
+      headerName: "Date de création",
       flex: 1,
       valueGetter: (params) => new Date(params.row.createdAt).toLocaleString(),
     },
     {
       field: "updatedAt",
-      headerName: "Updated At",
+      headerName: "Date de modification",
       flex: 1,
       valueGetter: (params) => new Date(params.row.updatedAt).toLocaleString(),
     },
     {
       field: "actions",
-      headerName: "Actions",
+      headerName: "Modifier/Supprimer",
       sortable: false,
       flex: 1,
       renderCell: (params) => {
@@ -117,13 +117,13 @@ const Population = () => {
 
   return (
     <Box m="1.5rem 2.5rem">
-      <Header title="POPULATION" subtitle="List of populations" />
+      <Header title="Population cible"  />
       <Box display="flex" alignItems="center" mb="1rem">
         <Button variant="contained" startIcon={<Add />} onClick={handleAddPopulation}>
-          Add Population
+          Ajouter population
         </Button>
         <TextField
-          label="Search by Name"
+          label="Rechercher"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           variant="outlined"
@@ -167,10 +167,10 @@ const Population = () => {
       </Box>
 
       <Dialog open={openAddDialog} onClose={handleCloseAddDialog}>
-        <DialogTitle>Add Population</DialogTitle>
+        <DialogTitle>Ajouter population</DialogTitle>
         <DialogContent>
           <TextField
-            label="Population Name"
+            label="Nom population"
             value={newPopulation}
             onChange={handleNewPopulationChange}
             fullWidth
@@ -182,22 +182,22 @@ const Population = () => {
             Cancel
           </Button>
           <Button onClick={handleSavePopulation} color="primary" variant="contained">
-            Save
+          Confirmer
           </Button>
         </DialogActions>
       </Dialog>
 
       <Dialog open={openDeleteConfirmation} onClose={handleCancelDelete}>
-        <DialogTitle>Confirm Delete</DialogTitle>
+        <DialogTitle>Confirmer suppression</DialogTitle>
         <DialogContent>
-          Are you sure you want to delete this population?
+          Vous-voulez vraiment supprimer cette population ?
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCancelDelete} color="primary">
-            Cancel
+            Annuler
           </Button>
           <Button onClick={handleConfirmDelete} sx={{ color: "red" }}>
-            Delete
+          Supprimer
           </Button>
         </DialogActions>
       </Dialog>

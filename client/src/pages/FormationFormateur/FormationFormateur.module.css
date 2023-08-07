@@ -69,6 +69,21 @@
   .modify:hover {
     background-color: #0056b3;
   }
+  .modifydisabled {
+    background-color: #b2bec3; /* Light gray color for disabled */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    margin-right: 5px;
+    cursor: not-allowed;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+  }
+  
+  .modifydisabled:hover {
+    background-color: #b2bec3; /* Keep the same gray color on hover */
+  }
+  
  
   
   
@@ -76,3 +91,4 @@
   .refusedRow {
     background-color: #f2f2f2; /* Gray color for the row */
   }
+  

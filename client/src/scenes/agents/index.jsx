@@ -16,12 +16,12 @@ const Agents = () => {
         // },
         {
             field:"firstName",
-            headerName:"Prénom",
+            headerName:"Nom",
             flex:1,
         },
         {
             field:"lastName",
-            headerName:"Nom",
+            headerName:"Prénom",
             flex:1,
         },
         {
@@ -61,7 +61,7 @@ const Agents = () => {
 
 
   return  ( <Box m="1.5rem 2.5rem">
-      <Header title="Liste d'agents" />
+      <Header title="Agents" />
       <Box
         mt="40px"
         height="75vh"

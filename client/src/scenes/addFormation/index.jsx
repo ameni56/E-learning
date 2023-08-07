@@ -134,9 +134,9 @@ const AddFormation = () => {
   console.log("formateursData", formateursData);
   console.log("formationData.nomFormateur", formationData.nomFormateur);
   return (
-    <Box m="1.5rem 2.5rem">
+    <Box m="0.1rem 3.5rem">
       
-      <h1 style={{ marginBottom: "1rem" ,marginLeft:"350px"}}>Ajouter une formation</h1>
+      <h1 style={{marginTop:"-20px", marginBottom: "0.1rem" ,marginLeft:"350px"}}>Ajouter une formation</h1>
       <form onSubmit={handleSubmit}>
 
       <TextField

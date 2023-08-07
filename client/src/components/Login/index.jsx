@@ -62,7 +62,7 @@ const Login = () => {
       else if (userRole === "agent") {
         navigate("/Agent/HomeAgent", { state: { userEmail: data.email,userMatricule:data.matricule }})}
       else if (userRole === "admin") {
-        navigate("/dashboardAdmin");
+        navigate("/formations", { state: { userEmail: data.email,userMatricule:data.matricule }})
       } else {
         console.error("Unknown user role:", userRole);
         // Handle the case if the user's role is not recognized.
