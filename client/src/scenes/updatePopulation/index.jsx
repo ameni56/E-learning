@@ -58,7 +58,7 @@ const EditPopulation = () => {
         />
         </Box>
         <Button variant="contained" type="submit" color="primary" fullWidth size="large">
-         Update
+        Modifier
         </Button>
       </form>
     </Box>

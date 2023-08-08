@@ -26,6 +26,7 @@ const Signup = () => {
     borderRadius: "5px",
     fontSize: "13px",
     cursor: "pointer",
+    width:"300px"
    
   };
   
@@ -315,7 +316,7 @@ const Signup = () => {
 
 </div> 
 <div className="input-wrap">
-        <div style={{ alignSelf: "flex-start", marginTop: "-20px" }} className="toggleposte">
+        <div style={{ alignSelf: "flex-start", marginTop: "-20px"}} className="toggleposte">
           Choisissez votre domaine :
         </div>
         <div className="custom-dropdown" style={dropdownStyles}>
@@ -344,7 +345,7 @@ const Signup = () => {
           )}
         </div>
       </div>
-            <button type="submit" className="sign-btn"style={{ marginTop: "20px" }} >
+            <button type="submit" className="sign-btn"style={{ marginTop: "40px" }} >
               S'inscrire
             </button>
            

@@ -40,7 +40,7 @@ const EditModule = () => {
   return (
     <Box maxWidth={800} mx="auto" mt={4} p={3} boxShadow={3} borderRadius={4}>
       <Typography variant="h4" align="center" mb={3}>
-        Edit Module
+        Modifier module
       </Typography>
       <form onSubmit={handleSubmit}>
         <TextField
@@ -54,7 +54,7 @@ const EditModule = () => {
           sx={{ width: 400 }}
         />
         <Button variant="contained" type="submit" color="primary" fullWidth size="large">
-          Update
+          Modifier
         </Button>
       </form>
     </Box>

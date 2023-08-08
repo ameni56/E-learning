@@ -179,7 +179,7 @@ const Population = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseAddDialog} color="primary">
-            Cancel
+            Annuler
           </Button>
           <Button onClick={handleSavePopulation} color="primary" variant="contained">
           Confirmer

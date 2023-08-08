@@ -134,10 +134,26 @@ const FormationFormateur = ({ userEmail }) => {
     datedebut: formation.dateDebut,
     datefin: formation.dateFin,
     actions: (
-      <div className={css.button}>
+    <div className={css.button}>
         {formation.formateurAccepte === true && <div className={css.accepted}>Accepté</div>}
         {formation.formateurAccepte === false && <div className={css.refused}>Refusé</div>}
-        <button
+        {formation.formateurAccepte === null && (
+          <>
+            <button
+              className={`${css.accept}`}
+              onClick={() => handleFormateurAction(formation, 'accept')}
+            >
+              Accepter
+            </button>
+            <button
+              className={`${css.refuse}`}
+              onClick={() => handleFormateurAction(formation, 'refuse')}
+            >
+              Refuser
+            </button>
+          </>
+        )}
+       <button
           className={`${css.modify} ${formation.formateurAccepte === false ? css.modifydisabled : ''}`}
           onClick={() => handleModifyFormation(formation)}
           disabled={formation.formateurAccepte === false}
