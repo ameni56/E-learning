@@ -18,13 +18,25 @@ function CardItem({ formation, modulesData }) {
   // Format the date using toLocaleDateString
   const formattedDateDebut = new Date(formation.dateDebut).toLocaleDateString();
   const formattedDateFin = new Date(formation.dateFin).toLocaleDateString();
-
+  const formatDuration = (totalMinutes) => {
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    
+    if (hours > 0 && minutes > 0) {
+      return `${hours} heures ${minutes} minutes`;
+    } else if (hours > 0) {
+      return `${hours} heures`;
+    } else {
+      return `${minutes} minutes`;
+    }
+  };
   return (
     <div className="card">
       <h3 className="module-name">{modules}</h3>
       <p className="description-text">{formation.description}</p>
       <p className="date-label">Date début: <span>{formattedDateDebut}</span></p>
       <p className="date-label">Date Fin: <span>{formattedDateFin}</span></p>
+      <p className="date-label">Durée: <span>{formatDuration(formation.duree)}</span></p>
       <a href={formation.lienMeet}>Lien Meet</a>
     </div>
   );

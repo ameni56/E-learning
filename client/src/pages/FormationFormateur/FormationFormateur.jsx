@@ -25,6 +25,18 @@ const FormationFormateur = ({ userEmail }) => {
 
   const { pathname } = useLocation();
 
+  const formatDuration = (totalMinutes) => {
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    
+    if (hours > 0 && minutes > 0) {
+      return `${hours} heures ${minutes} minutes`;
+    } else if (hours > 0) {
+      return `${hours} heures`;
+    } else {
+      return `${minutes} minutes`;
+    }
+  };
   const handleAcceptConfirmation = async (formationId) => {
     const shouldAccept = window.confirm('Voulez-vous accepter cette formation?');
     if (shouldAccept) {
@@ -115,6 +127,10 @@ const FormationFormateur = ({ userEmail }) => {
       header: 'Date de fin',
     },
     {
+      accessorKey: 'duree',
+      header: 'Durée',
+    },
+    {
       accessorKey: 'actions',
       header: 'Actions',
     },
@@ -133,24 +149,27 @@ const FormationFormateur = ({ userEmail }) => {
     lienMeet: formation.lienMeet,
     datedebut: formation.dateDebut,
     datefin: formation.dateFin,
+    duree: formatDuration(formation.duree),
     actions: (
     <div className={css.button}>
         {formation.formateurAccepte === true && <div className={css.accepted}>Accepté</div>}
         {formation.formateurAccepte === false && <div className={css.refused}>Refusé</div>}
         {formation.formateurAccepte === null && (
           <>
-            <button
-              className={`${css.accept}`}
-              onClick={() => handleFormateurAction(formation, 'accept')}
-            >
-              Accepter
-            </button>
-            <button
-              className={`${css.refuse}`}
-              onClick={() => handleFormateurAction(formation, 'refuse')}
-            >
-              Refuser
-            </button>
+            <div className={css.actionButtons}>
+  <button
+    className={`${css.accept}`}
+    onClick={() => handleFormateurAction(formation, 'accept')}
+  >
+    Accepter
+  </button>
+  <button
+    className={`${css.refuse}`}
+    onClick={() => handleFormateurAction(formation, 'refuse')}
+  >
+    Refuser
+  </button>
+</div>
           </>
         )}
        <button

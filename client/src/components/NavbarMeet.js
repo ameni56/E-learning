@@ -17,7 +17,7 @@ const Navbar = () => {
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Avatar src={logo} alt="Logo" sx={{ width: 48, height: 48, mr: 1 }} />
           <Typography variant="h6" component="div" sx={{ color: "white", fontWeight: "bold", flexGrow: 1 }}>
-            TT ACADEMY MEET
+            TT Académie meet
           </Typography>
         </Box>
 

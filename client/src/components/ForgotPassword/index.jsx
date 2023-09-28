@@ -63,7 +63,7 @@ const ForgotPassword = () => {
 <form onSubmit={handleSubmit} autoComplete="off" >
   <div className="logo">
         <img src={logo} alt="easyclass" />
-        <h4>TT ACADEMY</h4>
+        <h4>TT Académie</h4>
       </div>
 
       <div className="heading">
@@ -99,7 +99,7 @@ const ForgotPassword = () => {
 				
 				
 				<button type="submit" className="sign-btn">
-					Submit
+					Envoyer
 				</button>
 				</div>
 			</form>

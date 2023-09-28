@@ -93,7 +93,7 @@ const PasswordReset = () => {
      			 <div className={`input-wrap ${activeInput === 'password' ? 'active' : ''}`}>
 						<input
 							type="password"
-							placeholder="Password"
+							placeholder="Mot de passe"
 							name="password"
 							onChange={(e) => setPassword(e.target.value)}
 							value={password}
@@ -108,7 +108,7 @@ const PasswordReset = () => {
 						{error && <div className={styles.error_msg}>{error}</div>}
 						{msg && <div className={styles.success_msg}>{msg}</div>}
 						<button type="submit"  className="sign-btn" >
-							Submit
+							Envoyer
 						</button>
 						</div>
 			</form>

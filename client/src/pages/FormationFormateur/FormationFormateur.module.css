@@ -91,4 +91,7 @@
   .refusedRow {
     background-color: #f2f2f2; /* Gray color for the row */
   }
-  
+  .actionButtons {
+    display: flex;
+    flex-direction: column; /* Vertically align buttons */
+  }

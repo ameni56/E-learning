@@ -9,7 +9,7 @@ const formationSchema = new mongoose.Schema({
   },
   
   duree: {
-    type: Number,
+    type: String,
     required: true
   },
   objectifs: {

@@ -137,7 +137,7 @@ const Home = () => {
           <div style={styles.mainText}>
             Visioconférence
           </div>
-          <p style={styles.subText}>Avec TT ACADEMY</p>
+          <p style={styles.subText}>Avec TT Académie</p>
           {/* Enter Code */}
           <form onSubmit={submitCode} style={styles.form}>
             <label style={{ ...styles.mainText, paddingTop: "24px" }}></label>

@@ -35,6 +35,7 @@ const Formation = ({
   nomFormateur,
   dateDebut,
   dateFin,
+  duree,
   formateurAccepte,
   agents,
   stat,
@@ -81,6 +82,18 @@ const Formation = ({
     setShowDetails(false);
   };
 
+  const formatDuration = (totalMinutes) => {
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    
+    if (hours > 0 && minutes > 0) {
+      return `${hours} heures ${minutes} minutes`;
+    } else if (hours > 0) {
+      return `${hours} heures`;
+    } else {
+      return `${minutes} minutes`;
+    }
+  };
   return (
     <Card variant="outlined">
       <CardContent>
@@ -188,6 +201,7 @@ const Formation = ({
         </Typography>
           <Typography>Date début: {dateDebut}</Typography>
           <Typography>Date fin: {dateFin}</Typography>
+          <Typography>Durée: {formatDuration(duree)}</Typography>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDetails} color="primary">

@@ -104,12 +104,26 @@ const AddFormation = () => {
       nomFormateur: formationData.nomFormateur.filter((n) => n !== formateur),
     });
   };
-
+  const formatDuration = (totalMinutes) => {
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    return `${hours}:${minutes < 10 ? '0' : ''}${minutes}`;
+  };
   const handleChange = (e) => {
-    setFormationData({
-      ...formationData,
-      [e.target.name]: e.target.value,
-    });
+    if (e.target.name === "duree") {
+      const [hours, minutes] = e.target.value.split(":");
+      const totalMinutes = parseInt(hours) * 60 + parseInt(minutes);
+      
+      setFormationData({
+        ...formationData,
+        duree: totalMinutes,
+      });
+    } else {
+      setFormationData({
+        ...formationData,
+        [e.target.name]: e.target.value,
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -290,6 +304,20 @@ const AddFormation = () => {
           style={{width:"500px",marginLeft:"-170px"}}
         />
         </Box>
+        <Box mt={2}>
+          <InputLabel style={{ width: "500px", marginLeft: "-170px" }}>Durée (heures:minutes)</InputLabel>
+          <TextField
+            name="duree"
+            type="text" // Change the type to "text"
+            value={formatDuration(formationData.duree)} // Display in hours:minutes format
+            onChange={handleChange}
+            fullWidth
+            required
+            style={{ width: "500px", marginLeft: "-170px" }}
+          />
+        </Box>
+
+
         <Button type="submit" variant="contained" sx={{ mt: 2 }}  style={{width:"500px",marginLeft:"-170px"}}>
           Ajouter
         </Button>
