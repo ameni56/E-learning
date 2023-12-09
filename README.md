@@ -69,20 +69,20 @@ This project aims to facilitate the seamless management of training courses with
    cd server && npm install
    cd client && npm install
    
-5. Create a .env file in the server directory 
-   SALT=10
-   DB=your_mongodb_connection_string
-   PORT=8080
-   JWTPRIVATEKEY=your_private_key
-   BASE_URL=http://localhost:3000/
-   HOST=smtp.gmail.com
-   SERVICE=gmail
-   EMAIL_PORT=587
-   SECURE=true
-   USER=your_email
-   PASS=your_email_password
+4. Create a .env file in the server directory 
+   -SALT=10
+   -DB=your_mongodb_connection_string
+   -PORT=8080
+   -JWTPRIVATEKEY=your_private_key
+   -BASE_URL=http://localhost:3000/
+   -HOST=smtp.gmail.com
+   -SERVICE=gmail
+   -EMAIL_PORT=587
+   -SECURE=true
+   -USER=your_email
+   -PASS=your_email_password
    
-7. Create a .env.local file in the client directory 
+5. Create a .env.local file in the client directory 
    REACT_APP_BASE_URL=http://localhost:8080
    
 # In the server directory
@@ -91,4 +91,4 @@ npm start
 # In the client directory
 npm start   
 
-8. Open your browser and navigate to http://localhost:3000 to access the application.
+6. Open your browser and navigate to http://localhost:3000 to access the application.
