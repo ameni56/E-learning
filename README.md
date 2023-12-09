@@ -1,6 +1,7 @@
 # Tunisie Telecom E-Learning Platform
 
 Welcome to the Tunisie Telecom E-Learning Platform! This application is designed from A to Z to provide online training courses for Tunisie Telecom agents.
+![Capture](https://github.com/ameni56/E-learning/assets/98644334/c6fa4da8-5f66-4d79-9e31-28e2d88d1a8e)
 
 ## Project Description
 
