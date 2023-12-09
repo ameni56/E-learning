@@ -1,11 +1,11 @@
-# Tunisie Telecom E-Learning Platform
+# TT Academy E-Learning Platform
 
-Welcome to the Tunisie Telecom E-Learning Platform! This application is designed from A to Z to provide online training courses for Tunisie Telecom agents.
+Welcome to the TT Academy E-Learning Platform! This application is designed from A to Z to provide online training courses for Tunisie Telecom agents.
 ![Capture](https://github.com/ameni56/E-learning/assets/98644334/c6fa4da8-5f66-4d79-9e31-28e2d88d1a8e)
 
 ## Project Description
 
-This project aims to facilitate the seamless management of training courses within Tunisie Telecom through an innovative web platform. It enables users to engage in interactive e-learning experiences, with features such as user authentication, dynamic course management, module creation, and targeted audience administration.
+This project aims to facilitate the seamless management of training courses within TT Academy through an innovative web platform. It enables users to engage in interactive e-learning experiences, with features such as user authentication, dynamic course management, module creation, and targeted audience administration.
 
 ## Features
 
