@@ -69,7 +69,7 @@ This project aims to facilitate the seamless management of training courses with
    cd server && npm install
    cd client && npm install
    
-4. Create a .env file in the server directory 
+4. Create a .env file in the server directory:
    -SALT=10
    -DB=your_mongodb_connection_string
    -PORT=8080
