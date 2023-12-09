@@ -10,11 +10,12 @@ This project aims to facilitate the seamless management of training courses with
 
 - **User Authentication:**
   - Sign up and login functionality for three roles: agent, admin, and trainer.
-        Email Verification:
+    
+        **Email Verification:**
         - Users will receive a verification email upon registration.
         - Clicking the verification link confirms their email address and activates their account.
 
-        Forgot Password:
+        **Forgot Password:**
         - Users can initiate a password reset process if they forget their password.
         - A password reset email will be sent with instructions on how to create a new password.
 
